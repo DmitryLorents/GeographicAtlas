@@ -10,6 +10,8 @@ import UIKit
 class MainViewController: UIViewController {
     
     //MARK:  - Constants, variables & outlets
+    
+    var CountryArray: [Country]?
     var tableViewCountries: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -29,6 +31,7 @@ class MainViewController: UIViewController {
     private func setOutlets()  {
         tableViewCountries.delegate = self
         tableViewCountries.dataSource = self
+        tableViewCountries.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: MainTableViewCell.reuseID)
     }
     
     private func setConstraints() {
@@ -56,8 +59,9 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseID) as? MainTableViewCell else {return UITableViewCell()}
+        cell.setup(with: Country())
+        return cell
     }
-    
     
 }
