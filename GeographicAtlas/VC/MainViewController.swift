@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
     }
     
     private func setConstraints() {
-        tableViewCountries
+        
     }
 
 
