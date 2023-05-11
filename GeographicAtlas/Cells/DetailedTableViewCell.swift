@@ -8,6 +8,8 @@
 import UIKit
 
 class DetailedTableViewCell: UITableViewCell {
+    
+    static let reuseID = "DetailedTableViewCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()

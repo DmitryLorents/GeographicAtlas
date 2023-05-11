@@ -8,6 +8,8 @@
 import UIKit
 
 class MainTableViewCell: UITableViewCell {
+    
+    static let reuseID = "MainTableViewCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,6 +20,10 @@ class MainTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setup(with country: Country) {
+        
     }
     
 }
