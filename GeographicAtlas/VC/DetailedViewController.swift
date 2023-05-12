@@ -14,7 +14,6 @@ final class DetailedViewController: UIViewController {
     var tableViewDetailed: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.backgroundColor = .yellow
         return table
     }()
     
@@ -34,6 +33,7 @@ final class DetailedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setOutlets()
+        setupBackButton()
         setConstraints()
         
        
@@ -44,12 +44,28 @@ final class DetailedViewController: UIViewController {
         
         tableViewDetailed.delegate = self
         tableViewDetailed.dataSource = self
+        tableViewDetailed.backgroundColor = .cyan
+        view.addSubview(tableViewDetailed)
     }
     
     private func setConstraints() {
+        tableViewDetailed.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private func setupBackButton() {
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonAction))
     }
 
+    @objc func backButtonAction()  {
+        navigationController?.popViewController(animated: true)
+    }
 
 }
 
@@ -67,7 +83,7 @@ extension DetailedViewController: UITableViewDataSource {
         1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
