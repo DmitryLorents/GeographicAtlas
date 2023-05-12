@@ -29,6 +29,10 @@ class MainViewController: UIViewController {
     }
     //MARK: - Functions
     private func setOutlets()  {
+        
+        view.backgroundColor = .systemBackground
+        title = "World countries"
+        
         tableViewCountries.delegate = self
         tableViewCountries.dataSource = self
         tableViewCountries.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: MainTableViewCell.reuseID)
@@ -49,7 +53,10 @@ class MainViewController: UIViewController {
 //MARK: - TableView delegate
 
 extension MainViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detaoledVC = DetailedViewController(country: Country())
+        navigationController?.pushViewController(detaoledVC, animated: true)
+    }
 }
 
 //MARK: - TableView datasource
