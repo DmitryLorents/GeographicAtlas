@@ -63,7 +63,7 @@ final class DetailedViewController: UIViewController {
         imageViewCountry.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(24)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(193)
+            make.height.equalTo(imageViewCountry.snp.width).multipliedBy(0.5625)
         }
         
         tableViewDetailed.snp.makeConstraints { make in
@@ -101,7 +101,7 @@ extension DetailedViewController: UITableViewDataSource {
         1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
