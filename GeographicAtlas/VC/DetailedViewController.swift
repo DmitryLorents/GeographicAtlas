@@ -11,6 +11,13 @@ final class DetailedViewController: UIViewController {
 
     //MARK:  - Constants, variables & outlets
     var  country: Country?
+    var imageViewCountry: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius  = 8
+        return imageView
+    }()
     var tableViewDetailed: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -42,6 +49,9 @@ final class DetailedViewController: UIViewController {
     private func setOutlets()  {
         view.backgroundColor = .systemBackground
         
+        imageViewCountry.backgroundColor = .systemGray6
+        view.addSubview(imageViewCountry)
+        
         tableViewDetailed.delegate = self
         tableViewDetailed.dataSource = self
         tableViewDetailed.backgroundColor = .cyan
@@ -49,8 +59,16 @@ final class DetailedViewController: UIViewController {
     }
     
     private func setConstraints() {
+        
+        imageViewCountry.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(24)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(193)
+        }
+        
         tableViewDetailed.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(imageViewCountry.snp.bottom).inset(-22)
         }
     }
     
