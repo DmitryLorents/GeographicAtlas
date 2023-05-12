@@ -10,40 +10,40 @@ import Foundation
 // MARK: - Country
 struct Country: Codable {
     let name: Name
-    let tld: [String]?
+//    let tld: [String]?
     let cca2: String
-    let ccn3: String?
-    let cca3: String
-    let cioc: String?
-    let independent: Bool?
-    let status: Status
-    let unMember: Bool
+//    let ccn3: String?
+//    let cca3: String
+//    let cioc: String?
+//    let independent: Bool?
+//    let status: Status
+//    let unMember: Bool
     let currencies: Currencies?
-    let idd: Idd
+//    let idd: Idd
     let capital: [String]?
-    let altSpellings: [String]
+//    let altSpellings: [String]
     let region: Region
     let subregion: String?
-    let languages: [String: String]?
-    let translations: [String: Translation]
-    let latlng: [Double]
-    let landlocked: Bool
-    let borders: [String]?
+//    let languages: [String: String]?
+//    let translations: [String: Translation]
+//    let latlng: [Double]
+//    let landlocked: Bool
+//    let borders: [String]?
     let area: Double
-    let demonyms: Demonyms?
+//    let demonyms: Demonyms?
     let flag: String
-    let maps: Maps
+//    let maps: Maps
     let population: Int
-    let gini: [String: Double]?
-    let fifa: String?
-    let car: Car
+//    let gini: [String: Double]?
+//    let fifa: String?
+//    let car: Car
     let timezones: [String]
-    let continents: [Continent]
+//    let continents: [Continent]
     let flags: Flags
-    let coatOfArms: CoatOfArms
-    let startOfWeek: StartOfWeek
+//    let coatOfArms: CoatOfArms
+//    let startOfWeek: StartOfWeek
     let capitalInfo: CapitalInfo
-    let postalCode: PostalCode?
+//    let postalCode: PostalCode?
 }
 
 // MARK: - CapitalInfo
@@ -51,16 +51,16 @@ struct CapitalInfo: Codable {
     let latlng: [Double]?
 }
 
-// MARK: - Car
-struct Car: Codable {
-    let signs: [String]?
-    let side: Side
-}
+//// MARK: - Car
+//struct Car: Codable {
+//    let signs: [String]?
+//    let side: Side
+//}
 
-enum Side: String, Codable {
-    case sideLeft = "left"
-    case sideRight = "right"
-}
+//enum Side: String, Codable {
+//    case sideLeft = "left"
+//    case sideRight = "right"
+//}
 
 //// MARK: - CoatOfArms
 //struct CoatOfArms: Codable {
@@ -68,15 +68,15 @@ enum Side: String, Codable {
 //    let svg: String?
 //}
 
-enum Continent: String, Codable {
-    case africa = "Africa"
-    case antarctica = "Antarctica"
-    case asia = "Asia"
-    case europe = "Europe"
-    case northAmerica = "North America"
-    case oceania = "Oceania"
-    case southAmerica = "South America"
-}
+//enum Continent: String, Codable {
+//    case africa = "Africa"
+//    case antarctica = "Antarctica"
+//    case asia = "Asia"
+//    case europe = "Europe"
+//    case northAmerica = "North America"
+//    case oceania = "Oceania"
+//    case southAmerica = "South America"
+//}
 
 // MARK: - Currencies
 struct Currencies: Codable {
@@ -290,15 +290,15 @@ struct Currencies: Codable {
     }
 }
 
-//// MARK: - Aed
-//struct Aed: Codable {
-//    let name, symbol: String
-//}
+// MARK: - Aed
+struct Aed: Codable {
+    let name, symbol: String
+}
 
-//// MARK: - BAM
-//struct BAM: Codable {
-//    let name: String
-//}
+// MARK: - BAM
+struct BAM: Codable {
+    let name: String
+}
 
 
 

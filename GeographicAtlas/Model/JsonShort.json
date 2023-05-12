@@ -1,0 +1,50 @@
+[
+   {
+      "name":{
+         "common":"Spain",
+      },
+      "cca2":"ES",
+      "currencies":{
+         "EUR":{
+            "name":"Euro",
+            "symbol":"в‚¬"
+         }
+      },
+      "capital":[
+         "Madrid"
+      ],
+      "region":"Europe",
+      "subregion":"Southern Europe",
+      
+      },
+      
+      "area":505992.0,
+      
+      },
+      "flag":"\uD83C\uDDEA\uD83C\uDDF8",
+      "maps":{
+         "googleMaps":"https://goo.gl/maps/138JaXW8EZzRVitY9",
+         "openStreetMaps":"https://www.openstreetmap.org/relation/1311341"
+      },
+      "population":47351567,
+      "gini":{
+         "2018":34.7
+      },
+      "timezones":[
+         "UTC",
+         "UTC+01:00"
+      ],
+      "continents":[
+         "Europe"
+      ],
+      "flags":{
+         "png":"https://flagcdn.com/w320/es.png",
+      },
+      "capitalInfo":{
+         "latlng":[
+            40.4,
+            -3.68
+         ]
+      },
+   },
+   {
