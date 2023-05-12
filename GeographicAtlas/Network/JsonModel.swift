@@ -1,8 +1,8 @@
 //
-//  DataStorage.swift
+//  JsonModel.swift
 //  GeographicAtlas
 //
-//  Created by Дмитрий Лоренц on 11.05.2023.
+//  Created by Дмитрий Лоренц on 12.05.2023.
 //
 
 import Foundation
@@ -62,11 +62,11 @@ enum Side: String, Codable {
     case sideRight = "right"
 }
 
-//// MARK: - CoatOfArms
-//struct CoatOfArms: Codable {
-//    let png: String?
-//    let svg: String?
-//}
+// MARK: - CoatOfArms
+struct CoatOfArms: Codable {
+    let png: String?
+    let svg: String?
+}
 
 enum Continent: String, Codable {
     case africa = "Africa"
@@ -290,32 +290,60 @@ struct Currencies: Codable {
     }
 }
 
-//// MARK: - Aed
-//struct Aed: Codable {
-//    let name, symbol: String
-//}
+// MARK: - Aed
+struct Aed: Codable {
+    let name, symbol: String
+}
 
-//// MARK: - BAM
-//struct BAM: Codable {
-//    let name: String
-//}
+// MARK: - BAM
+struct BAM: Codable {
+    let name: String
+}
 
+// MARK: - Demonyms
+struct Demonyms: Codable {
+    let eng: Eng
+    let fra: Eng?
+}
 
+// MARK: - Eng
+struct Eng: Codable {
+    let f, m: String
+}
 
 // MARK: - Flags
 struct Flags: Codable {
     let png: String
+    let svg: String
+    let alt: String?
 }
 
+// MARK: - Idd
+struct Idd: Codable {
+    let root: String?
+    let suffixes: [String]?
+}
 
-//// MARK: - Maps
-//struct Maps: Codable {
-//    let googleMaps, openStreetMaps: String
-//}
+// MARK: - Maps
+struct Maps: Codable {
+    let googleMaps, openStreetMaps: String
+}
 
 // MARK: - Name
 struct Name: Codable {
-    let common: String
+    let common, official: String
+    let nativeName: [String: Translation]?
+}
+
+// MARK: - Translation
+struct Translation: Codable {
+    let official, common: String
+}
+
+// MARK: - PostalCode
+struct PostalCode: Codable {
+    let format: String
+    let regex: String?
 }
 
 enum Region: String, Codable {
@@ -327,4 +355,15 @@ enum Region: String, Codable {
     case oceania = "Oceania"
 }
 
+enum StartOfWeek: String, Codable {
+    case monday = "monday"
+    case saturday = "saturday"
+    case sunday = "sunday"
+}
 
+enum Status: String, Codable {
+    case officiallyAssigned = "officially-assigned"
+    case userAssigned = "user-assigned"
+}
+
+typealias Welcome = [Country]
