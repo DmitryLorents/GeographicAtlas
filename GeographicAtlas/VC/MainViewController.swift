@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainViewController: UIViewController {
     
@@ -15,7 +16,6 @@ class MainViewController: UIViewController {
     var tableViewCountries: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.backgroundColor = .yellow
         return table
     }()
 
@@ -32,10 +32,15 @@ class MainViewController: UIViewController {
         tableViewCountries.delegate = self
         tableViewCountries.dataSource = self
         tableViewCountries.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: MainTableViewCell.reuseID)
+        view.addSubview(tableViewCountries)
+        tableViewCountries.backgroundColor = .yellow
     }
     
     private func setConstraints() {
-        
+        tableViewCountries.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+
+        }
     }
 
 
@@ -55,12 +60,12 @@ extension MainViewController: UITableViewDataSource {
         1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseID) as? MainTableViewCell else {return UITableViewCell()}
-        cell.setup(with: Country())
+        //cell.setup(with: Country())
         return cell
     }
     
