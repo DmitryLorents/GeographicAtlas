@@ -16,7 +16,10 @@ class MainViewController: UIViewController {
         didSet  {
             print("Countries downloaded")
             activitiIndicator.stopAnimating()
-            tableViewCountries.alpha = 1
+            UIView.animate(withDuration: 1, delay: 0) {
+                self.tableViewCountries.alpha = 1
+            }
+            
             self.tableViewCountries.reloadData()
         }
     }
@@ -52,7 +55,7 @@ class MainViewController: UIViewController {
         
         activitiIndicator.translatesAutoresizingMaskIntoConstraints = false
         activitiIndicator.hidesWhenStopped  = true
-        activitiIndicator.color = .systemBlue
+        //activitiIndicator.color = .systemBlue
         view.addSubview(activitiIndicator)
     }
     
@@ -70,7 +73,9 @@ class MainViewController: UIViewController {
     private func fetchCountries() {
         
         activitiIndicator.startAnimating()
-        tableViewCountries.alpha = 0.5
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.tableViewCountries.alpha = 0.3
+        }
         networkManager.getCountries { result in
             switch result {
             case.failure(let error): print(error.localizedDescription)
