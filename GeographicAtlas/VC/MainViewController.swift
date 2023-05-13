@@ -12,20 +12,27 @@ class MainViewController: UIViewController {
     
     //MARK:  - Constants, variables & outlets
     
-    var CountryArray: [Country]?
+    var countries: Countries? {
+        didSet  {
+            print("Countries downloaded")
+            self.tableViewCountries.reloadData()
+        }
+    }
+    let networkManager = DownloadManager()
     var tableViewCountries: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
-
-//MARK: - Load view
+    
+    //MARK: - Load view
     override func viewDidLoad() {
         super.viewDidLoad()
         setOutlets()
         setConstraints()
+        fetchCountries()
         
-       
+        
     }
     //MARK: - Functions
     private func setOutlets()  {
@@ -43,19 +50,35 @@ class MainViewController: UIViewController {
     private func setConstraints() {
         tableViewCountries.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
-
+            
         }
     }
+    
+    private func fetchCountries() {
 
-
+        networkManager.getCountries { result in
+            switch result {
+            case.failure(let error): print(error.localizedDescription)
+            case.success(let resultCountries):
+                
+                DispatchQueue.main.async {
+                    self.countries = resultCountries
+                }
+            }
+        }
+    }
+    
 }
 
 //MARK: - TableView delegate
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detaoledVC = DetailedViewController(country: Country())
-        navigationController?.pushViewController(detaoledVC, animated: true)
+                let detaoledVC = DetailedViewController(country: nil)
+                navigationController?.pushViewController(detaoledVC, animated: true)
+//        countries?.forEach({ country in
+//            print(country.name)
+//        })
     }
 }
 

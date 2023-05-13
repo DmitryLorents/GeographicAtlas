@@ -26,7 +26,7 @@ final class DetailedViewController: UIViewController {
     
     //MARK: - Init
     
-    init(country: Country) {
+    init(country: Country?) {
         super.init(nibName: nil, bundle: nil)
         self.title = "Country name"
         self.country = country

@@ -12,11 +12,15 @@ class  DownloadManager {
     let decoder = JSONDecoder()
     
     func getCountries(completion: @escaping (Result<Countries, Error>) -> () ) {
-        guard let url = URL(string: urlStringAll) else {return}
+        guard let url = URL(string: urlStringAll) else {
+            print("Incorrect URL")
+            return}
         
         URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
             
-            guard let self = self else { return }
+            guard let self = self else {
+                print("No self")
+                return }
             guard let downloadedData = data, error == nil else {
                 completion(.failure(error!))
                 return}
