@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias Countries = [Country]
+
 // MARK: - Country
 struct Country: Codable {
     let name: Name
