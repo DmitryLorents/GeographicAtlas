@@ -15,10 +15,14 @@ class MainViewController: UIViewController {
     var countries: Countries? {
         didSet  {
             print("Countries downloaded")
+            activitiIndicator.stopAnimating()
+            tableViewCountries.alpha = 1
             self.tableViewCountries.reloadData()
         }
     }
     let networkManager = DownloadManager()
+    
+    let activitiIndicator =  UIActivityIndicatorView(style: .large)
     var tableViewCountries: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -45,17 +49,28 @@ class MainViewController: UIViewController {
         tableViewCountries.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: MainTableViewCell.reuseID)
         view.addSubview(tableViewCountries)
         tableViewCountries.backgroundColor = .yellow
+        
+        activitiIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activitiIndicator.hidesWhenStopped  = true
+        activitiIndicator.color = .systemBlue
+        view.addSubview(activitiIndicator)
     }
     
     private func setConstraints() {
+        
         tableViewCountries.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
-            
+        }
+        
+        activitiIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
     
     private func fetchCountries() {
-
+        
+        activitiIndicator.startAnimating()
+        tableViewCountries.alpha = 0.5
         networkManager.getCountries { result in
             switch result {
             case.failure(let error): print(error.localizedDescription)
