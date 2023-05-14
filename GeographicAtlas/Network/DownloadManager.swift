@@ -11,7 +11,7 @@ class  DownloadManager {
     var urlString: String! //= "https://restcountries.com/v3.1/all"
     let decoder = JSONDecoder()
     
-    func getAllCountries(CCA2: String?, completion: @escaping (Result<Countries, Error>) -> () ) {
+    func getCountriesInfo(CCA2: String?, completion: @escaping (Result<Countries, Error>) -> () ) {
         switch CCA2 {
         case.none:
             urlString = "https://restcountries.com/v3.1/all"

@@ -43,7 +43,6 @@ class MainTableViewCell: UITableViewCell {
         contentView.addSubview(imageViewFlag)
         contentView.addSubview(labelCapital)
         contentView.addSubview(labelCountry)
-        
         setConstraints()
     }
 

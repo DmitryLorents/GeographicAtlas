@@ -76,7 +76,7 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.tableViewCountries.alpha = 0.3
         }
-        networkManager.getCountries { result in
+        networkManager.getCountriesInfo(CCA2: nil) { result in
             switch result {
             case.failure(let error): print(error.localizedDescription)
             case.success(let resultCountries):
