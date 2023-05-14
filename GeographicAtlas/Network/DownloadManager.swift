@@ -8,11 +8,17 @@
 import Foundation
 
 class  DownloadManager {
-    let urlStringAll = "https://restcountries.com/v3.1/all"
+    var urlString: String! //= "https://restcountries.com/v3.1/all"
     let decoder = JSONDecoder()
     
-    func getCountries(completion: @escaping (Result<Countries, Error>) -> () ) {
-        guard let url = URL(string: urlStringAll) else {
+    func getAllCountries(CCA2: String?, completion: @escaping (Result<Countries, Error>) -> () ) {
+        switch CCA2 {
+        case.none:
+            urlString = "https://restcountries.com/v3.1/all"
+        case.some(let CCA2Text):
+            urlString = "https://restcountries.com/v3.1/alpha/" + CCA2Text
+        }
+        guard let url = URL(string: urlString) else {
             print("Incorrect URL")
             return}
         
@@ -30,6 +36,7 @@ class  DownloadManager {
                 completion(.failure(error!))
                 return}
             completion(.success(parsedData))
-            }.resume()
-        }
+        }.resume()
+    }
+    
 }
