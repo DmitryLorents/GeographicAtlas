@@ -53,8 +53,9 @@ class MainTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setup(with country: Country) {
-        
+    func setup(with country: Country?) {
+        labelCountry.text = country?.name.common
+        labelCapital.text = country?.capital?.first
     }
     
     private func setConstraints() {
