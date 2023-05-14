@@ -28,8 +28,8 @@ final class DetailedViewController: UIViewController {
     
     init(country: Country?) {
         super.init(nibName: nil, bundle: nil)
-        self.title = "Country name"
         self.country = country
+        self.title = country?.name.common
     }
     
     required init?(coder: NSCoder) {
@@ -48,6 +48,7 @@ final class DetailedViewController: UIViewController {
     //MARK: - Functions
     private func setOutlets()  {
         view.backgroundColor = .systemBackground
+        tableViewDetailed.register(UINib(nibName: "DetailedTableViewCell", bundle: nil), forCellReuseIdentifier: DetailedTableViewCell.reuseID)
         
         imageViewCountry.backgroundColor = .systemGray6
         view.addSubview(imageViewCountry)
@@ -90,7 +91,9 @@ final class DetailedViewController: UIViewController {
 //MARK: - TableView delegate
 
 extension DetailedViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        70
+    }
 }
 
 //MARK: - TableView datasource
@@ -105,7 +108,8 @@ extension DetailedViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailedTableViewCell.reuseID, for: indexPath) as? DetailedTableViewCell else {return UITableViewCell() }
+        return cell
     }
     
    

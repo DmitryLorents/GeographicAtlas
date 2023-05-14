@@ -94,7 +94,8 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-                let detaoledVC = DetailedViewController(country: nil)
+        let country = countries?[indexPath.row]
+                let detaoledVC = DetailedViewController(country: country)
                 navigationController?.pushViewController(detaoledVC, animated: true)
     }
 }
@@ -122,6 +123,3 @@ extension MainViewController: UITableViewDataSource {
     }
     
 }
-//UITableVieew Flow Layout
-
-//extension  MainViewController:
