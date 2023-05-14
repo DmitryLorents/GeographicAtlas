@@ -96,9 +96,6 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                 let detaoledVC = DetailedViewController(country: nil)
                 navigationController?.pushViewController(detaoledVC, animated: true)
-//        countries?.forEach({ country in
-//            print(country.name)
-//        })
     }
 }
 

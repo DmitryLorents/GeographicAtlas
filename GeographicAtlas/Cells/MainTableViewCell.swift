@@ -18,11 +18,31 @@ class MainTableViewCell: UITableViewCell {
         view.clipsToBounds = true
         return view
     }()
+    
+    var labelCountry: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.textColor = .black
+        label.text = "Country"
+        return label
+    }()
+    
+    var labelCapital: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .capitalLabel
+        label.text = "Capital"
+        return label
+    }()
 
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = .white
         contentView.addSubview(imageViewFlag)
+        contentView.addSubview(labelCapital)
+        contentView.addSubview(labelCountry)
         
         setConstraints()
     }
@@ -43,6 +63,17 @@ class MainTableViewCell: UITableViewCell {
             make.width.equalTo(82)
             make.height.equalTo(imageViewFlag.snp.width).multipliedBy(0.5)
         }
+        
+        labelCountry.snp.makeConstraints { make in
+            make.top.equalTo(imageViewFlag)
+            make.leading.equalTo(imageViewFlag.snp.trailing).inset(-12)
+        }
+        
+        labelCapital.snp.makeConstraints { make in
+            make.bottom.equalTo(imageViewFlag)
+            make.leading.equalTo(labelCountry)
+        }
+        
     }
     
 }
