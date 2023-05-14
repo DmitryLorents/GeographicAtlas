@@ -73,4 +73,9 @@ class DetailedTableViewCell: UITableViewCell {
         
     }
     
+    func setup(_ tupleData: (topText: String, bottomText: String)) {
+        labelTop.text = tupleData.topText
+        labelBottom.text = tupleData.bottomText
+    }
+    
 }
