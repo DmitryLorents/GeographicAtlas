@@ -73,6 +73,10 @@ final class DetailedViewController: UIViewController {
         }
     }
     
+    private func setDataForCell(index: IndexPath) -> (topText: String, bottomText: String) {
+        return ("TopText", "BottomText" )
+    }
+    
     private func setupBackButton() {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -108,7 +112,10 @@ extension DetailedViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailedTableViewCell.reuseID, for: indexPath) as? DetailedTableViewCell else {return UITableViewCell() }
+        let dataForCell = setDataForCell(index: indexPath)
+        cell.setup(dataForCell)
         return cell
     }
     
