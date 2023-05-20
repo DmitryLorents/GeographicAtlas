@@ -94,8 +94,10 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let country = countries?[indexPath.row]
-                let detaoledVC = DetailedViewController(country: country)
+        guard let country = countries?[indexPath.row] else {
+            print("Cointry is empty")
+            return}
+        let detaoledVC = DetailedViewController(CCA2: country.cca2)
                 navigationController?.pushViewController(detaoledVC, animated: true)
     }
 }

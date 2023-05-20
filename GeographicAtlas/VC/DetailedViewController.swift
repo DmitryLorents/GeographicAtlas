@@ -10,7 +10,14 @@ import UIKit
 final class DetailedViewController: UIViewController {
 
     //MARK:  - Constants, variables & outlets
-    var  country: Country?
+    var  country: Country? {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableViewDetailed.reloadData()
+            }
+        }
+    }
+    let networkManager = DownloadManager()
     var imageViewCountry: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,6 +32,24 @@ final class DetailedViewController: UIViewController {
     }()
     
     //MARK: - Init
+    
+    init(CCA2: String) {
+        super.init(nibName: nil, bundle: nil)
+        
+        networkManager.getCountriesInfo(CCA2: CCA2) { result in
+            switch result {
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            case .success(let countries):
+                self.country = countries.first
+            }
+        }
+        DispatchQueue.main.async {
+            self.title = self.country?.name.common
+        }
+       
+        
+    }
     
     init(country: Country?) {
         super.init(nibName: nil, bundle: nil)
@@ -73,8 +98,19 @@ final class DetailedViewController: UIViewController {
         }
     }
     
-    private func setDataForCell(index: IndexPath) -> (topText: String, bottomText: String) {
-        return ("TopText", "BottomText" )
+    private func setDataForCell(index: IndexPath) -> (topText: String, bottomText: String?) {
+        switch index.row {
+        case 0: return ("Region", country?.region.rawValue )
+        case 1: return ("Capital", country?.capital?.description )
+        case 2:return ("Capital coordinates", "\(String(describing: country?.capitalInfo.latlng?[0])), \(String(describing: country?.capitalInfo.latlng?[1]))" )
+        case 3: return ("Population", "\(String(describing: country?.population))" )
+        case 4: return ("Area", "\(String(describing: country?.area)) km2" )
+        case 5: return ("Currency", "\(String(describing: country?.currencies)) " )
+        case 6: return ("Timezones", "\(String(describing: country?.timezones.first)) " )
+        default: return ("TopText", "BottomText" )
+            
+        }
+        
     }
     
     private func setupBackButton() {

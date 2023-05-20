@@ -73,9 +73,9 @@ class DetailedTableViewCell: UITableViewCell {
         
     }
     
-    func setup(_ tupleData: (topText: String, bottomText: String)) {
+    func setup(_ tupleData: (topText: String, bottomText: String?)) {
         labelTop.text = tupleData.topText
-        labelBottom.text = tupleData.bottomText
+        labelBottom.text = tupleData.bottomText ?? "No data"
     }
     
 }
