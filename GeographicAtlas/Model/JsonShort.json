@@ -38,4 +38,60 @@
       },
    },
    {
-]
+       ]
+       
+       import Foundation
+       let formatter = MeasurementFormatter()
+       formatter.unitOptions = .naturalScale
+       formatter.unitStyle = .long formatter
+       .locale = Locale(identifier: "en_FR" )
+       let distanceInMeters = Measurement(value: 2 , unit: UnitLength .meters )
+       // 2.0 m
+       // Optionally set the `numberFormatter` property
+       // Expects an instance of `NumberFormatter`
+       // You could set the `NumberFormatter .numberStyle ` property to: // .none // .decimal // .currency // .percent // .scientific // .spellOut // Defaults to .decimal if unset
+       let numberFormatter = NumberFormatter()
+       numberFormatter .numberStyle = .spellOut
+       formatter .numberFormatter = numberFormatter
+       formatter .string (from: distanceInMeters) // two meters
+       
+       // distance in user 's default locale // this would print with different formats in various locales: // 3626.81 miles for en_US // 5.836 , 77 km for en_IT // 5 836 , 77 km for en_FR // 5 , 836.77 km for en_JP // To find out your locale: NSLocale.current import Foundation
+       let distanceInMiles = Measurement(value: 3626.81 , unit: UnitLength.miles)
+       MeasurementFormatter(). string (from: distanceInMiles)
+       
+       Create a local variable instance of MeasurementFormatter which we can reuse and configure
+       let formatter = MeasurementFormatter()
+       let distanceInMiles = Measurement( value : 3626.81 , unit: UnitLength.miles)
+       // You should collect this for UIPickerView or similar input
+       // and replace "en_FR" with the result of the picker
+       // This will save the string to the "locale" key in device storage
+       UserDefaults.standard. set ( "en_FR" , forKey: "locale" )
+       // From this point on , we want to refer to the saved preference
+       // If the User default is nil, we failover to "en_FR"
+       let localeIdentifier = UserDefaults.standard.object(forKey: "locale" ) ?? "en_FR"
+       // Last we initiate our Locale class with this identifier
+       let locale = Locale(identifier: localeIdentifier as ! String)
+       // Optionally set the `locale` property of our instance.
+       // If we do not set this, it will default to the user 's device locale
+       formatter.locale = locale formatter.string(from: distanceInMiles) // prints "5 836,77 km"
+       
+       // You can optionally set the `unitStyle` property
+       // Expects enum case from `MeasurementFormatter.UnitStyle`
+       // Defaults to `.medium` // You can simply pass the case value : `.long`
+       // or you can write it out as shown below
+       let formatter = MeasurementFormatter()
+       let distanceInMiles = Measurement( value : 3626.81 , unit: UnitLength.miles)
+       formatter.unitStyle = MeasurementFormatter.UnitStyle.long
+       formatter.string( from : distanceInMiles) // 3 , 626.81 miles
+       
+       let formatter = MeasurementFormatter()
+       // Working with meters and evaluating the results
+       let distanceInMeters = Measurement( value : 2 , unit: UnitLength.meters)
+       formatter. string ( from : distanceInMeters)
+       // prints "0,002 kilometres" // However, we can see the class is aware of the original unit of measure
+       formatter. string ( from : UnitLength.meters)
+       // prints "metres"
+       // Optionally set the `unitOptions` property
+       // This can be: .providedUnit, .naturalScale, or .temperatureWithoutUnit
+       // Options provided by MeasurementFormatter.UnitOptions
+       // This defaults to a privately defined format if unset formatter.unitOptions = .naturalScale formatter. string ( from : distanceInMeters) // prints "2 metres" 
