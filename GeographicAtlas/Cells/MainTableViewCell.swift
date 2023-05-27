@@ -60,7 +60,6 @@ class MainTableViewCell: UITableViewCell {
     private func setConstraints() {
         imageViewFlag.snp.makeConstraints { make in
             make.top.leading.bottom.equalToSuperview().inset(12)
-            make.width.equalTo(82)
             make.height.equalTo(imageViewFlag.snp.width).multipliedBy(0.5)
         }
         
