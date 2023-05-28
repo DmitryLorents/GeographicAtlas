@@ -46,27 +46,27 @@ class  DownloadManager {
         }.resume()
     }
     
-//    func sorting(_ countries: Countries) -> [String: Countries] {
-//        
-//        //creeate an array of all possible regions
-//        var regions = [String]()
-//        Region.allCases.forEach { region in
-//            regions.append(region.rawValue)
-//        }
-//        //iterate each country in incoming "countries" and add each of them  into corresponding array in output dictionary
-//        var outputDictionary = [String: Countries]()
-//        countries.forEach { country in
-//            let  key = country.region.rawValue
-//            if var existingArray = outputDictionary[key] {
-//                existingArray.append(country)
-//                outputDictionary.updateValue(existingArray, forKey: key)
-//            } else {
-//                let newArray = [country]
-//                outputDictionary.updateValue(newArray, forKey: key)
-//            }
-//        }
-//        
-//        return outputDictionary
-//        }
+    func sorting(_ countries: Countries) -> [String: Countries] {
+        
+        //creeate an array of all possible regions
+        var regions = [String]()
+        Region.allCases.forEach { region in
+            regions.append(region.rawValue)
+        }
+        //iterate each country in incoming "countries" and add each of them  into corresponding array in output dictionary
+        var outputDictionary = [String: Countries]()
+        countries.forEach { country in
+            let  key = country.region.rawValue
+            if var existingArray = outputDictionary[key] {
+                existingArray.append(country)
+                outputDictionary.updateValue(existingArray, forKey: key)
+            } else {
+                let newArray = [country]
+                outputDictionary.updateValue(newArray, forKey: key)
+            }
+        }
+        
+        return outputDictionary
+        }
     
 }
