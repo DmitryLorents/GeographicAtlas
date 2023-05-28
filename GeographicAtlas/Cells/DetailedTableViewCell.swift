@@ -34,9 +34,12 @@ class DetailedTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .black
+        label.numberOfLines = 0
         label.text = "Text"
         return label
     }()
+    
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()

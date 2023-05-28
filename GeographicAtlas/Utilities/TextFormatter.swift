@@ -23,4 +23,13 @@ class TextFormatter {
     func population(_ quantity: Int) -> String {
         return Double(quantity).kmFormatted
     }
+    
+    func timeZones(_ zones: [String]?) -> String {
+        guard let zones = zones  else { return  "No data" }
+        var timeZoneString = ""
+        for zone in zones {
+            timeZoneString.append( (timeZoneString.isEmpty ? zone : "\n\(zone)") )
+        }
+        return timeZoneString.isEmpty ? "No data" : timeZoneString
+    }
 }
