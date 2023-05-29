@@ -54,7 +54,7 @@ class MainTableViewCell: UITableViewCell {
     
     func setup(with country: Country?) {
         labelCountry.text = country?.name.common
-        //labelCapital.text = country?.capital?.first
+        labelCapital.text = country?.capital?.first
     }
     
     private func setConstraints() {

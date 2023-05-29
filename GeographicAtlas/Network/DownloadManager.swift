@@ -65,6 +65,13 @@ class  DownloadManager {
                 outputDictionary.updateValue(newArray, forKey: key)
             }
         }
+        //sort each country array by alphabet
+        for (key, value) in outputDictionary {
+            let newValue = value.sorted(by: {country1, country2 in
+                country1.name.common < country2.name.common
+            })
+            outputDictionary.updateValue(newValue, forKey: key)
+        }
         
         return outputDictionary
         }

@@ -14,14 +14,6 @@ class MainViewController: UIViewController {
 
     var countriesSorted: [String: Countries]? {
         didSet {
-//            for (key, value) in countriesSorted!  {
-//                print("----\n\n\(key): \(value)")
-//            }
-        }
-    }
-
-    var countries: Countries? {
-        didSet  {
             print("Countries downloaded")
             activitiIndicator.stopAnimating()
             UIView.animate(withDuration: 1, delay: 0) {
@@ -31,6 +23,18 @@ class MainViewController: UIViewController {
             self.tableViewCountries.reloadData()
         }
     }
+
+    var countries: Countries? //{
+//        didSet  {
+//            print("Countries downloaded")
+//            activitiIndicator.stopAnimating()
+//            UIView.animate(withDuration: 1, delay: 0) {
+//                self.tableViewCountries.alpha = 1
+//            }
+//
+//            self.tableViewCountries.reloadData()
+//        }
+//    }
     let networkManager = DownloadManager()
 
     let activitiIndicator =  UIActivityIndicatorView(style: .large)
@@ -90,11 +94,6 @@ class MainViewController: UIViewController {
             case.success(let resultCountries):
                 DispatchQueue.main.async {
                     self.countriesSorted = self.networkManager.sorting(resultCountries)
-                    self.countries = resultCountries.sorted(by: { country1, country2 in
-                        country1.region < country2.region
-                    })//.sorted(by: { country1, country2 in
-                    //return country1.name.common < country2.name.common
-                    //})
                 }
             }
         }
@@ -106,9 +105,12 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let country = countries?[indexPath.row] else {
-            print("Cointry is empty")
-            return}
+        
+        let key = Region.key(for: indexPath.section)
+        guard let countryArray = countriesSorted?[key] else {
+            print("No countryArray")
+            return }
+        let country = countryArray[indexPath.row]
         let detaoledVC = DetailedViewController(CCA2: country.cca2)
         navigationController?.pushViewController(detaoledVC, animated: true)
     }
@@ -119,15 +121,21 @@ extension MainViewController: UITableViewDelegate {
 extension MainViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        countriesSorted?.count ?? 0
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        countries?.count ?? 1
+        let key = Region.key(for: section)
+        guard let countriesSorted = countriesSorted else {return 0}
+        let countriesArray = countriesSorted[key]
+        return countriesArray?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseID) as? MainTableViewCell else {return UITableViewCell()}
-        let country = countries?[indexPath.row]
+        let key = Region.key(for: indexPath.section)
+        
+        guard let countryArray = countriesSorted?[key] else {return UITableViewCell() }
+        let country = countryArray[indexPath.row]
         cell.setup(with: country)
         return cell
     }
