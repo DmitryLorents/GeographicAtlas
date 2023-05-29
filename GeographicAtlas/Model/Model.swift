@@ -331,6 +331,19 @@ enum Region: String, Codable, CaseIterable, Comparable {
     case asia = "Asia"
     case europe = "Europe"
     case oceania = "Oceania"
+    
+    static func key(for index: Int) -> String {
+        switch index {
+        case 0: return self.africa.rawValue
+        case 1: return self.americas.rawValue
+        case 2: return self.antarctic.rawValue
+        case 3: return self.asia.rawValue
+        case 4: return self.europe.rawValue
+        case 5: return self.oceania.rawValue
+        default: return self.africa.rawValue
+        }
+    }
+    
 }
 
 
