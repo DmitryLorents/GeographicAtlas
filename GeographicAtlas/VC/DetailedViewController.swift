@@ -111,7 +111,7 @@ final class DetailedViewController: UIViewController {
             let area = country?.area
             let areeaString = TextFormatter().area(area)
             return ("Area", areeaString)
-        case 5: return ("", "")//("Currency", "\(String(describing: country?.currencies)) " )
+        case 5: return ("Currency", "\(String(describing: country?.currencies)) " )
         case 6:  let timeZoneString = TextFormatter().timeZones(country?.timezones)
             return ("Timezones", timeZoneString )
         default: return ("TopText", "BottomText" )

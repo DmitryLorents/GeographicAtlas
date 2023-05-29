@@ -14,9 +14,9 @@ class MainViewController: UIViewController {
 
     var countriesSorted: [String: Countries]? {
         didSet {
-            for (key, value) in countriesSorted!  {
-                print("\(key): \(value)")
-            }
+//            for (key, value) in countriesSorted!  {
+//                print("----\n\n\(key): \(value)")
+//            }
         }
     }
 
@@ -90,9 +90,9 @@ class MainViewController: UIViewController {
             case.success(let resultCountries):
                 DispatchQueue.main.async {
                     self.countriesSorted = self.networkManager.sorting(resultCountries)
-//                    self.countries = resultCountries.sorted(by: { country1, country2 in
-//                        country1.region < country2.region
-//                    })//.sorted(by: { country1, country2 in
+                    self.countries = resultCountries.sorted(by: { country1, country2 in
+                        country1.region < country2.region
+                    })//.sorted(by: { country1, country2 in
                     //return country1.name.common < country2.name.common
                     //})
                 }

@@ -20,7 +20,7 @@ struct Country: Codable {
 //    let independent: Bool?
 //    let status: Status
 //    let unMember: Bool
-//    let currencies: Currencies?
+    let currencies: Currencies?
 //    let idd: Idd
     let capital: [String]?
 //    let altSpellings: [String]
