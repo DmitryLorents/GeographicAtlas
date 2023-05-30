@@ -63,7 +63,8 @@ class MainViewController: UIViewController {
         tableViewCountries.dataSource = self
         tableViewCountries.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: MainTableViewCell.reuseID)
         view.addSubview(tableViewCountries)
-        tableViewCountries.backgroundColor = .yellow
+        //tableViewCountries.backgroundColor = .yellow
+        tableViewCountries.separatorStyle = .none
 
         activitiIndicator.translatesAutoresizingMaskIntoConstraints = false
         activitiIndicator.hidesWhenStopped  = true
@@ -119,6 +120,10 @@ extension MainViewController: UITableViewDelegate {
 //MARK: - TableView datasource
 
 extension MainViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        Region.key(for: section).uppercased()
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         countriesSorted?.count ?? 0
