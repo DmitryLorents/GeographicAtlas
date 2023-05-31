@@ -9,4 +9,5 @@ import UIKit
 
 extension UIColor {
     static let capitalLabel = UIColor(named: "capitalLabel")
+    static let mainViewBackground = UIColor(named: "mainViewBackground")
 }
