@@ -82,7 +82,6 @@ final class DetailedViewController: UIViewController {
         
         tableViewDetailed.delegate = self
         tableViewDetailed.dataSource = self
-        tableViewDetailed.backgroundColor = .cyan
         view.addSubview(tableViewDetailed)
     }
     

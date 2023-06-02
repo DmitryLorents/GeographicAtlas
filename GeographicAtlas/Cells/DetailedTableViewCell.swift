@@ -11,19 +11,21 @@ import SnapKit
 class DetailedTableViewCell: UITableViewCell {
     
     static let reuseID = "DetailedTableViewCell"
+    
     var labelPoint: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 60)
+        label.font = UIFont.boldSystemFont(ofSize: 80)
         label.text = "."
+        label.textAlignment = .center
         return label
     }()
     
     var labelTop: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .capitalLabel
         label.text = "Text"
         return label
@@ -32,7 +34,7 @@ class DetailedTableViewCell: UITableViewCell {
     var labelBottom: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont(name: "SFProText-Regular", size: 20)
         label.textColor = .black
         label.numberOfLines = 0
         label.text = "Text"
@@ -61,7 +63,10 @@ class DetailedTableViewCell: UITableViewCell {
     
     private func setConstraints() {
         labelPoint.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(38)
+            make.top.equalToSuperview().inset(-45)
+            make.leading.equalToSuperview().inset(16)
+//            make.width.equalTo(24)
+//            make.height.equalTo(24)
         }
         
         labelTop.snp.makeConstraints { make in
