@@ -105,7 +105,9 @@ final class DetailedViewController: UIViewController {
         case 1:
             let capital: String = country?.capital?.first ?? "No data"
             return ("Capital", capital )
-        case 2:return ("Capital coordinates", "\(String(describing: country?.capitalInfo.latlng?[0])), \(String(describing: country?.capitalInfo.latlng?[1]))" )
+        case 2:
+            let coordinatesString = TextFormatter().coordinates(country?.capitalInfo.latlng)
+            return ("Capital coordinates", coordinatesString )
         case 3:
             let population = country?.population ?? 0
             let populationString = TextFormatter().population(population)
