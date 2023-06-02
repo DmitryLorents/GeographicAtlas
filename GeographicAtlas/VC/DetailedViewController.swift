@@ -15,6 +15,10 @@ final class DetailedViewController: UIViewController {
             DispatchQueue.main.async {
                 self.tableViewDetailed.reloadData()
                 self.title = self.country?.name.common
+                //get image
+                let urlString =   self.country?.flags.png ?? ""
+                let imageURL = URL(string: urlString)
+                self.imageViewCountry.kf.setImage(with: imageURL )
             }
         }
     }
