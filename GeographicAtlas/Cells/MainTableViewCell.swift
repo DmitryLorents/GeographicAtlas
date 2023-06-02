@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class MainTableViewCell: UITableViewCell {
     
@@ -74,6 +75,8 @@ class MainTableViewCell: UITableViewCell {
     func setup(with country: Country?) {
         labelCountry.text = country?.name.common
         labelCapital.text = country?.capital?.first
+        let imageURL = URL(string: country?.flags.png ?? "")
+        imageViewFlag.kf.setImage(with: imageURL)
     }
     
     private func setConstraints() {
