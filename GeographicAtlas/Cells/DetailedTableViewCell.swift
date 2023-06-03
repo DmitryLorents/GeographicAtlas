@@ -75,7 +75,7 @@ class DetailedTableViewCell: UITableViewCell {
         }
         
         labelBottom.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(12)
+            make.top.equalTo(labelTop.snp.bottom).inset(-4 )
             make.leading.equalTo(labelTop)
         }
         

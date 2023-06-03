@@ -8,7 +8,7 @@
 import UIKit
 
 final class DetailedViewController: UIViewController {
-
+    
     //MARK:  - Constants, variables & outlets
     var  country: Country? {
         didSet {
@@ -37,6 +37,10 @@ final class DetailedViewController: UIViewController {
         return table
     }()
     
+    lazy var heightOfSixthRow: CGFloat  = {
+        CGFloat(70 + 28 * (country?.timezones.count-1 ?? 0))
+    }()
+    
     //MARK: - Init
     
     init(CCA2: String) {
@@ -50,7 +54,7 @@ final class DetailedViewController: UIViewController {
                 self.country = countries.first
             }
         }
-            
+        
     }
     
     init(country: Country?) {
@@ -63,14 +67,14 @@ final class DetailedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//MARK: - Load view
+    //MARK: - Load view
     override func viewDidLoad() {
         super.viewDidLoad()
         setOutlets()
         setupBackButton()
         setConstraints()
         
-       
+        
     }
     //MARK: - Functions
     private func setOutlets()  {
@@ -143,23 +147,23 @@ final class DetailedViewController: UIViewController {
             target: self,
             action: #selector(backButtonAction))
     }
-
+    
     @objc func backButtonAction()  {
         navigationController?.popViewController(animated: true)
     }
-
+    
 }
 
 //MARK: - TableView delegate
 
 extension DetailedViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        var additionalHeight: CGFloat = 0
-//        if let cell = tableView.cellForRow(at: indexPath) as? DetailedTableViewCell {
-//            additionalHeight += CGFloat(cell.labelBottom.numberOfLines * 28)
-//            //print(indexPath, ": \(additionalHeight)")
-//        }
-       return 70 //+ additionalHeight
+        if indexPath.row == 6 {
+            return heightOfSixthRow
+        } else {
+            return 70
+        }
     }
 }
 
@@ -167,9 +171,9 @@ extension DetailedViewController: UITableViewDelegate {
 
 extension DetailedViewController: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        1
+//    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         7
     }
@@ -182,5 +186,5 @@ extension DetailedViewController: UITableViewDataSource {
         return cell
     }
     
-   
+    
 }
