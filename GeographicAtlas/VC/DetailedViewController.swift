@@ -13,12 +13,14 @@ final class DetailedViewController: UIViewController {
     var  country: Country? {
         didSet {
             DispatchQueue.main.async {
+                self.heightOfSixthRow = CGFloat(70 + 28 * (country?.timezones.count-1 ?? 0))
                 self.tableViewDetailed.reloadData()
                 self.title = self.country?.name.common
                 //get image
                 let urlString =   self.country?.flags.png ?? ""
                 let imageURL = URL(string: urlString)
                 self.imageViewCountry.kf.setImage(with: imageURL )
+                
             }
         }
     }
@@ -37,9 +39,7 @@ final class DetailedViewController: UIViewController {
         return table
     }()
     
-    lazy var heightOfSixthRow: CGFloat  = {
-        CGFloat(70 + 28 * (country?.timezones.count-1 ?? 0))
-    }()
+    var heightOfSixthRow: CGFloat  = 70
     
     //MARK: - Init
     
