@@ -13,7 +13,7 @@ final class DetailedViewController: UIViewController {
     var  country: Country? {
         didSet {
             DispatchQueue.main.async {
-                self.heightOfSixthRow = CGFloat(70 + 28 * (country?.timezones.count-1 ?? 0))
+                self.heightOfSixthRow = CGFloat(70 + 28 * ((self.country?.timezones.count ?? 1)-1))
                 self.tableViewDetailed.reloadData()
                 self.title = self.country?.name.common
                 //get image
