@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-
+    
     //MARK:  - Constants, variables & outlets
-
+    
     var countriesSorted: [String: Countries]? {
         didSet {
             print("Countries downloaded")
@@ -19,72 +19,84 @@ class MainViewController: UIViewController {
             UIView.animate(withDuration: 1, delay: 0) {
                 self.tableViewCountries.alpha = 1
             }
-
+            
             self.tableViewCountries.reloadData()
         }
     }
-
-    var countries: Countries? //{
-//        didSet  {
-//            print("Countries downloaded")
-//            activitiIndicator.stopAnimating()
-//            UIView.animate(withDuration: 1, delay: 0) {
-//                self.tableViewCountries.alpha = 1
+    
+//    var countriesToPrint: CountriesEX? {
+//        didSet {
+//            print("Currencies downloaded and sorted")
+//            guard let downloadedCountries = self.countriesToPrint else {return}
+//            for country in downloadedCountries {
+//                if let currency = country.currencies {
+//                    let dictionary = currency.dictionary
+//                    for (key, value) in dictionary {
+//                        print("\n \(key) \(value.name) \(value.symbol)")
+//                    }
+//                }else {
+//                    print("Currency for this country is nil")
+//                }
 //            }
 //
-//            self.tableViewCountries.reloadData()
+//        }
+//    }
+    
+//    var countries: Countries? {
+//        didSet  {
+//            print("Countries setted")
 //        }
 //    }
     let networkManager = DownloadManager()
-
+    
     let activitiIndicator =  UIActivityIndicatorView(style: .large)
     var tableViewCountries: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
-
+    
     //MARK: - Load view
     override func viewDidLoad() {
         super.viewDidLoad()
         setOutlets()
         setConstraints()
         fetchCountries()
-
-
+        
+        
     }
     //MARK: - Functions
     private func setOutlets()  {
-
+        
         view.backgroundColor = .systemBackground
         title = "World countries"
-
+        
         tableViewCountries.delegate = self
         tableViewCountries.dataSource = self
         tableViewCountries.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: MainTableViewCell.reuseID)
         view.addSubview(tableViewCountries)
         //tableViewCountries.backgroundColor = .yellow
         tableViewCountries.separatorStyle = .none
-
+        
         activitiIndicator.translatesAutoresizingMaskIntoConstraints = false
         activitiIndicator.hidesWhenStopped  = true
         //activitiIndicator.color = .systemBlue
         view.addSubview(activitiIndicator)
     }
-
+    
     private func setConstraints() {
-
+        
         tableViewCountries.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-
+        
         activitiIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
     }
-
+    
     private func fetchCountries() {
-
+        
         activitiIndicator.startAnimating()
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.tableViewCountries.alpha = 0.3
@@ -95,11 +107,22 @@ class MainViewController: UIViewController {
             case.success(let resultCountries):
                 DispatchQueue.main.async {
                     self.countriesSorted = self.networkManager.sorting(resultCountries)
+//                    self.countries = resultCountries
                 }
             }
         }
+        
+//        networkManager.getCurrency(CCA2: nil) { result in
+//            switch result {
+//            case.failure(let error): print(error.localizedDescription)
+//            case.success(let resultCountries):
+//                DispatchQueue.main.async {
+//                    self.countriesToPrint = resultCountries
+//                }
+//            }
+//        }
     }
-
+    
 }
 
 //MARK: - TableView delegate
@@ -124,7 +147,7 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         Region.key(for: section).uppercased()
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         countriesSorted?.count ?? 0
     }
@@ -134,7 +157,7 @@ extension MainViewController: UITableViewDataSource {
         let countriesArray = countriesSorted[key]
         return countriesArray?.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseID) as? MainTableViewCell else {return UITableViewCell()}
         let key = Region.key(for: indexPath.section)
@@ -144,9 +167,9 @@ extension MainViewController: UITableViewDataSource {
         cell.setup(with: country)
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 84
     }
-
+    
 }

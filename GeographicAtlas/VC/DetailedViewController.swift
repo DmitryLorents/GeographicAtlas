@@ -13,7 +13,8 @@ final class DetailedViewController: UIViewController {
     var  country: Country? {
         didSet {
             DispatchQueue.main.async {
-                self.heightOfSixthRow = CGFloat(70 + 28 * ((self.country?.timezones.count ?? 1)-1))
+                //self.heightOfSixthRow = CGFloat(heightOfStandardRow + 20 * ((self.country?.timezones.count ?? 1)-1))
+                //self.heightOfFifthRow = CGFloat(heightOfStandardRow + 20 * ((self.country?.currencies?.dictionary.count ?? 1)-1))
                 self.tableViewDetailed.reloadData()
                 self.title = self.country?.name.common
                 //get image
@@ -26,6 +27,7 @@ final class DetailedViewController: UIViewController {
     }
     var tableData: [(name: String, value: String)]? = nil
     let networkManager = DownloadManager()
+    let textFormatter = TextFormatter()
     var imageViewCountry: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,8 +40,9 @@ final class DetailedViewController: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
-    
+    let heightOfStandardRow: CGFloat = 70
     var heightOfSixthRow: CGFloat  = 70
+    var heightOfFifthRow: CGFloat  = 70
     
     //MARK: - Init
     
@@ -110,17 +113,20 @@ final class DetailedViewController: UIViewController {
             let capital: String = country?.capital?.first ?? "No data"
             return ("Capital", capital )
         case 2:
-            let coordinatesString = TextFormatter().coordinates(country?.capitalInfo.latlng)
+            let coordinatesString = textFormatter.coordinates(country?.capitalInfo.latlng)
             return ("Capital coordinates", coordinatesString )
         case 3:
             let population = country?.population ?? 0
-            let populationString = TextFormatter().population(population)
+            let populationString = textFormatter.population(population)
             return ("Population", populationString )
         case 4:
             let area = country?.area
-            let areeaString = TextFormatter().area(area)
+            let areeaString = textFormatter.area(area)
             return ("Area", areeaString)
-        case 5: return ("Currency", "\(String(describing: country?.currencies)) " )
+        case 5:
+            let currency = country?.currencies
+            let currencyString = textFormatter.currencies(currency)
+            return ("Currency", currencyString )
         case 6:  let timeZoneString = TextFormatter().timeZones(country?.timezones)
             return ("Timezones", timeZoneString )
         default: return ("TopText", "BottomText" )
@@ -159,12 +165,13 @@ final class DetailedViewController: UIViewController {
 extension DetailedViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 6 {
-            return heightOfSixthRow
-        } else {
-            return 70
+        switch indexPath.row {
+        case 5: return heightOfFifthRow
+        case 6: return heightOfSixthRow
+        default: return heightOfStandardRow
         }
     }
+    
 }
 
 //MARK: - TableView datasource

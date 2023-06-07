@@ -43,4 +43,18 @@ class TextFormatter {
         let lonSecString = formatter.string(from: lonSec)
         return "\(latDegString)\(latSecString), \(lonDegString)\(lonSecString)"
     }
+    
+    func currencies(_ container: CurrencyContainer?) -> String {
+        guard let container = container else {return "No data"}
+        var outputString = ""
+        for (key, value) in container.dictionary {
+            let currencyAbreviature = key
+            let currencySymbol = value.symbol ?? ""
+            let currencyName = value.name
+            let newLineString = "\(currencyName) (\(currencySymbol)) (\(currencyAbreviature))"
+            //add several rows in case of key quantity > 1
+            outputString = (outputString == "") ? newLineString : "\n" + newLineString
+        }
+        return outputString
+    }
 }
