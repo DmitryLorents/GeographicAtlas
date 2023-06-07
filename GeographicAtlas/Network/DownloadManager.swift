@@ -76,33 +76,4 @@ class  DownloadManager {
         return outputDictionary
         }
     
-//    func getCurrency(CCA2: String?, completion: @escaping (Result<CountriesEX, Error>) -> () ) {
-//        switch CCA2 {
-//        case.none:
-//            urlString =  "https://restcountries.com/v3.1/all"
-//            
-//        case.some(let CCA2Text):
-//            urlString = "https://restcountries.com/v3.1/alpha/" + CCA2Text
-//        }
-//        guard let url = URL(string: urlString) else {
-//            print("Incorrect URL")
-//            return}
-//        
-//        URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
-//            
-//            guard let self = self else {
-//                print("No self")
-//                return }
-//            guard let downloadedData = data, error == nil else {
-//                completion(.failure(error!))
-//                return}
-//            
-//            
-//            guard let parsedData = try? self.decoder.decode(CountriesEX.self, from: downloadedData) else {
-//                completion(.failure(error ?? ParsingErrors.decodingProblem))
-//                return}
-//            completion(.success(parsedData))
-//        }.resume()
-//    }
-    
 }

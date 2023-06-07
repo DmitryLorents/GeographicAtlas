@@ -24,29 +24,6 @@ class MainViewController: UIViewController {
         }
     }
     
-//    var countriesToPrint: CountriesEX? {
-//        didSet {
-//            print("Currencies downloaded and sorted")
-//            guard let downloadedCountries = self.countriesToPrint else {return}
-//            for country in downloadedCountries {
-//                if let currency = country.currencies {
-//                    let dictionary = currency.dictionary
-//                    for (key, value) in dictionary {
-//                        print("\n \(key) \(value.name) \(value.symbol)")
-//                    }
-//                }else {
-//                    print("Currency for this country is nil")
-//                }
-//            }
-//
-//        }
-//    }
-    
-//    var countries: Countries? {
-//        didSet  {
-//            print("Countries setted")
-//        }
-//    }
     let networkManager = DownloadManager()
     
     let activitiIndicator =  UIActivityIndicatorView(style: .large)
@@ -107,20 +84,9 @@ class MainViewController: UIViewController {
             case.success(let resultCountries):
                 DispatchQueue.main.async {
                     self.countriesSorted = self.networkManager.sorting(resultCountries)
-//                    self.countries = resultCountries
                 }
             }
         }
-        
-//        networkManager.getCurrency(CCA2: nil) { result in
-//            switch result {
-//            case.failure(let error): print(error.localizedDescription)
-//            case.success(let resultCountries):
-//                DispatchQueue.main.async {
-//                    self.countriesToPrint = resultCountries
-//                }
-//            }
-//        }
     }
     
 }

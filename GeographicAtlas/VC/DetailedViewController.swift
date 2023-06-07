@@ -134,17 +134,6 @@ final class DetailedViewController: UIViewController {
         
     }
     
-    private func setTableData() {
-        guard let strongCountry = country else {return}
-        //Region
-        tableData?.append((name: "Region", value: strongCountry.region.rawValue ))
-        //Capital
-        let capitalName = strongCountry.capital?.description ?? "No data"
-        tableData?.append((name: "Capital", value: capitalName))
-        //Capital coordinates
-        let capitalCoordinates = country?.capitalInfo.latlng?[0]
-    }
-    
     private func setupBackButton() {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -178,9 +167,6 @@ extension DetailedViewController: UITableViewDelegate {
 
 extension DetailedViewController: UITableViewDataSource {
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        1
-//    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         7
     }
