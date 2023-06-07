@@ -10,11 +10,16 @@ import UIKit
 final class DetailedViewController: UIViewController {
     
     //MARK:  - Constants, variables & outlets
+    let heightOfStandardRow: CGFloat = 70
+    var heightOfSixthRow: CGFloat  = 70
+    var heightOfFifthRow: CGFloat  = 70
+    
     var  country: Country? {
         didSet {
+            self.heightOfSixthRow = CGFloat(heightOfStandardRow + CGFloat(20 * ((self.country?.timezones.count ?? 1)-1)))
+            self.heightOfFifthRow = CGFloat(heightOfStandardRow + CGFloat(20 * ((self.country?.currencies?.dictionary.count ?? 1)-1)))
             DispatchQueue.main.async {
-                //self.heightOfSixthRow = CGFloat(heightOfStandardRow + 20 * ((self.country?.timezones.count ?? 1)-1))
-                //self.heightOfFifthRow = CGFloat(heightOfStandardRow + 20 * ((self.country?.currencies?.dictionary.count ?? 1)-1))
+                
                 self.tableViewDetailed.reloadData()
                 self.title = self.country?.name.common
                 //get image
@@ -40,9 +45,7 @@ final class DetailedViewController: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
-    let heightOfStandardRow: CGFloat = 70
-    var heightOfSixthRow: CGFloat  = 70
-    var heightOfFifthRow: CGFloat  = 70
+    
     
     //MARK: - Init
     
