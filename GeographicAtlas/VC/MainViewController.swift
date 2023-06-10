@@ -32,6 +32,8 @@ class MainViewController: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
+    let smallCellHeight: CGFloat = 84
+    let bigCellHeight: CGFloat = 228
     
     //MARK: - Load view
     override func viewDidLoad() {
@@ -135,7 +137,7 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 84
+        return bigCellHeight
     }
     
 }

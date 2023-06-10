@@ -30,12 +30,14 @@ class MainTableViewCell: UITableViewCell {
         return view
     }()
     
-    var chevronImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(systemName: "chevron.down"))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.tintColor = .black
-        view.isUserInteractionEnabled = true
-        return view
+    var chevronButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(systemName: "chevron.down")
+        button.setImage(image, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .black
+        button.isUserInteractionEnabled = true
+        return button
     }()
     
     var labelCountry: UILabel = {
@@ -55,14 +57,81 @@ class MainTableViewCell: UITableViewCell {
         label.text = "Capital"
         return label
     }()
+    
+    var labelPopulation: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
+        label.textColor = .capitalLabel
+        label.text = "Population:"
+        return label
+    }()
+    var labelPopulationValue: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
+        label.textColor = .black
+        label.text = "No data"
+        return label
+        
+    }()
+    
+    var labelArea: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
+        label.textColor = .capitalLabel
+        label.text = "Area:"
+        return label
+    }()
+    var labelAreaValue: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
+        label.textColor = .black
+        label.text = "No data"
+        return label
+    }()
+    var labelCurrencies: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
+        label.textColor = .capitalLabel
+        label.text = "Currencies:"
+        return label
+    }()
+    var labelCurrenciesValue: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
+        label.textColor = .black
+        label.text = "No data"
+        return label
+    }()
+    
+    var learnMoreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.isUserInteractionEnabled = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Learn more", for: .normal)
+        button.titleLabel?.font = UIFont(name: "SFProText-Semibold", size: 20)
+        return button
+    }()
 
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.addSubview(grayBackgroundView)
         grayBackgroundView.addSubview(imageViewFlag)
-        grayBackgroundView.addSubview(chevronImageView)
+        grayBackgroundView.addSubview(chevronButton)
         contentView.addSubview(labelCapital)
         contentView.addSubview(labelCountry)
+        grayBackgroundView.addSubview(labelPopulation)
+        grayBackgroundView.addSubview(labelPopulationValue)
+        grayBackgroundView.addSubview(labelArea)
+        grayBackgroundView.addSubview(labelAreaValue)
+        grayBackgroundView.addSubview(labelCurrencies)
+        grayBackgroundView.addSubview(labelCurrenciesValue)
+        grayBackgroundView.addSubview(learnMoreButton)
         setConstraints()
     }
 
@@ -85,28 +154,59 @@ class MainTableViewCell: UITableViewCell {
         }
         
         imageViewFlag.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview().inset(12)
+            //make.top.leading.bottom.equalToSuperview().inset(12)
+            make.top.leading.equalToSuperview().inset(12)
+            make.bottom.equalToSuperview().inset(156)
             make.height.equalTo(imageViewFlag.snp.width).multipliedBy(0.5)
         }
         
-        chevronImageView.snp.makeConstraints { make in
+        chevronButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(12)
             make.width.height.equalTo(24)
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(imageViewFlag)
         }
         
         labelCountry.snp.makeConstraints { make in
             make.top.equalTo(imageViewFlag).inset(4)
             make.leading.equalTo(imageViewFlag.snp.trailing).inset(-12)
-            make.trailing.equalTo(chevronImageView.snp.leading).inset(-12)
+            make.trailing.equalTo(chevronButton.snp.leading).inset(-12)
         }
         
         labelCapital.snp.makeConstraints { make in
-            make.bottom.equalTo(imageViewFlag).inset(4)
+            make.bottom.equalTo(imageViewFlag).inset(-4)
             make.leading.equalTo(labelCountry)
             make.trailing.equalTo(labelCountry)
         }
         
+        labelPopulation.snp.makeConstraints { make in
+            make.bottom.equalTo(imageViewFlag).inset(-30)
+            make.leading.equalTo(imageViewFlag)
+        }
+        labelPopulationValue.snp.makeConstraints { make in
+            make.bottom.equalTo(labelPopulation)
+            make.leading.equalTo(labelPopulation.snp.trailing).inset(-4)
+        }
+        labelArea.snp.makeConstraints { make in
+            make.bottom.equalTo(labelPopulation).inset(-26)
+            make.leading.equalTo(imageViewFlag)
+        }
+        labelAreaValue.snp.makeConstraints { make in
+            make.bottom.equalTo(labelArea)
+            make.leading.equalTo(labelArea.snp.trailing).inset(-4)
+        }
+        labelCurrencies.snp.makeConstraints { make in
+            make.bottom.equalTo(labelArea).inset(-26)
+            make.leading.equalTo(imageViewFlag)
+        }
+        labelCurrenciesValue.snp.makeConstraints { make in
+            make.bottom.equalTo(labelCurrencies)
+            make.leading.equalTo(labelCurrencies.snp.trailing).inset(-4)
+        }
+        learnMoreButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(26)
+            make.height.equalTo(22)
+        }
     }
     
 }
