@@ -16,8 +16,8 @@ final class DetailedViewController: UIViewController {
     
     var  country: Country? {
         didSet {
-            self.heightOfSixthRow = CGFloat(heightOfStandardRow + CGFloat(20 * ((self.country?.timezones.count ?? 1)-1)))
-            self.heightOfFifthRow = CGFloat(heightOfStandardRow + CGFloat(20 * ((self.country?.currencies?.dictionary.count ?? 1)-1)))
+            self.heightOfSixthRow = heightOfStandardRow + CGFloat(20 * ((self.country?.timezones.count ?? 1)-1))
+            self.heightOfFifthRow = heightOfStandardRow + CGFloat(20 * ((self.country?.currencies?.dictionary.count ?? 1)-1))
             DispatchQueue.main.async {
                 
                 self.tableViewDetailed.reloadData()
