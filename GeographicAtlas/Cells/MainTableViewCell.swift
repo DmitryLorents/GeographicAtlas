@@ -10,8 +10,10 @@ import SnapKit
 import Kingfisher
 
 class MainTableViewCell: UITableViewCell {
+//MARK: - Constants and variables
     
     static let reuseID = "MainTableViewCell"
+    let textFormatter = TextFormatter()
     
     var grayBackgroundView: UIView = {
         let view = UIView()
@@ -118,8 +120,40 @@ class MainTableViewCell: UITableViewCell {
         return button
     }()
 
+    //MARK: - Load view
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        setOutlets()
+        setConstraints()
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    //MARK: - Methods
+    
+    func setup(with country: Country?) {
+        labelCountry.text = country?.name.common
+        labelCapital.text = country?.capital?.first
+        let imageURL = URL(string: country?.flags.png ?? "")
+        imageViewFlag.kf.setImage(with: imageURL)
+        //population
+        let population = country?.population ?? 0
+        let populationString = textFormatter.population(population)
+        labelPopulationValue.text = populationString
+        //area
+        let area = country?.area
+        let areaString = textFormatter.area(area)
+        labelAreaValue.text = areaString
+        //currencies
+        let currency = country?.currencies
+        let currencyString = textFormatter.currencies(currency)
+        labelCurrenciesValue.text = currencyString
+    }
+    
+    private func setOutlets() {
         contentView.addSubview(grayBackgroundView)
         grayBackgroundView.addSubview(imageViewFlag)
         grayBackgroundView.addSubview(chevronButton)
@@ -132,20 +166,6 @@ class MainTableViewCell: UITableViewCell {
         grayBackgroundView.addSubview(labelCurrencies)
         grayBackgroundView.addSubview(labelCurrenciesValue)
         grayBackgroundView.addSubview(learnMoreButton)
-        setConstraints()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    func setup(with country: Country?) {
-        labelCountry.text = country?.name.common
-        labelCapital.text = country?.capital?.first
-        let imageURL = URL(string: country?.flags.png ?? "")
-        imageViewFlag.kf.setImage(with: imageURL)
     }
     
     private func setConstraints() {

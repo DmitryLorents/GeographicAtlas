@@ -124,8 +124,8 @@ final class DetailedViewController: UIViewController {
             return ("Population", populationString )
         case 4:
             let area = country?.area
-            let areeaString = textFormatter.area(area)
-            return ("Area", areeaString)
+            let areaString = textFormatter.area(area)
+            return ("Area", areaString)
         case 5:
             let currency = country?.currencies
             let currencyString = textFormatter.currencies(currency)
