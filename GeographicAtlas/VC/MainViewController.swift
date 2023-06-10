@@ -133,11 +133,23 @@ extension MainViewController: UITableViewDataSource {
         guard let countryArray = countriesSorted?[key] else {return UITableViewCell() }
         let country = countryArray[indexPath.row]
         cell.setup(with: country)
+//        cell.completion = {
+//            tableView.performBatchUpdates {
+//                tableView.reloadData()
+//            }
+//        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return bigCellHeight
+//        guard let cell = tableView.cellForRow(at: indexPath) as? MainTableViewCell else {return smallCellHeight}
+//        switch cell.isOpened {
+//        case true:
+//            print("IndexPath: \(indexPath) cell was opened")
+//            return bigCellHeight
+//        case false: return smallCellHeight
+//        }
+        return smallCellHeight
     }
     
 }
