@@ -10,16 +10,16 @@ import SnapKit
 import Kingfisher
 
 class MainTableViewCell: UITableViewCell {
-//MARK: - Constants and variables
+    //MARK: - Constants and variables
     
     static let reuseID = "MainTableViewCell"
     private let textFormatter = TextFormatter()
-    var isOpened: Bool = false
+    lazy var isOpened: Bool = false
     var completion: (() -> Void)?
+    var heightConstraint: Constraint!
     
     var grayBackgroundView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .mainViewBackground
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
@@ -27,7 +27,6 @@ class MainTableViewCell: UITableViewCell {
     }()
     var imageViewFlag: UIImageView = {
         let view = UIImageView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .gray
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
@@ -38,7 +37,6 @@ class MainTableViewCell: UITableViewCell {
         let button = UIButton(type: .system)
         let image = UIImage(systemName: "chevron.down")
         button.setImage(image, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .black
         button.isUserInteractionEnabled = true
         return button
@@ -46,7 +44,6 @@ class MainTableViewCell: UITableViewCell {
     
     var labelCountry: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .black
         label.text = "Country"
@@ -55,7 +52,6 @@ class MainTableViewCell: UITableViewCell {
     
     var labelCapital: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .capitalLabel
         label.text = "Capital"
@@ -64,7 +60,6 @@ class MainTableViewCell: UITableViewCell {
     
     var labelPopulation: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .capitalLabel
         label.text = "Population:"
@@ -73,7 +68,6 @@ class MainTableViewCell: UITableViewCell {
     }()
     var labelPopulationValue: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .black
         label.text = "No data"
@@ -84,7 +78,6 @@ class MainTableViewCell: UITableViewCell {
     
     var labelArea: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .capitalLabel
         label.text = "Area:"
@@ -93,7 +86,6 @@ class MainTableViewCell: UITableViewCell {
     }()
     var labelAreaValue: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .black
         label.text = "No data"
@@ -102,7 +94,6 @@ class MainTableViewCell: UITableViewCell {
     }()
     var labelCurrencies: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .capitalLabel
         label.text = "Currencies:"
@@ -111,7 +102,6 @@ class MainTableViewCell: UITableViewCell {
     }()
     var labelCurrenciesValue: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .black
         label.text = "No data"
@@ -122,13 +112,15 @@ class MainTableViewCell: UITableViewCell {
     var learnMoreButton: UIButton = {
         let button = UIButton(type: .system)
         button.isUserInteractionEnabled = true
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Learn more", for: .normal)
         button.titleLabel?.font = UIFont(name: "SFProText-Semibold", size: 20)
         button.isHidden = true
         return button
     }()
-
+    lazy var hiddenOutlets: [UIView] = {
+        [labelPopulation, labelPopulationValue, labelArea, labelAreaValue, labelCurrencies, labelCurrenciesValue, learnMoreButton]
+    }()
+    
     //MARK: - Load view
     
     override func awakeFromNib() {
@@ -136,7 +128,7 @@ class MainTableViewCell: UITableViewCell {
         setOutlets()
         setConstraints()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -180,13 +172,18 @@ class MainTableViewCell: UITableViewCell {
     
     private func setConstraints() {
         grayBackgroundView.snp.makeConstraints { make in
+            var height: CGFloat = (isOpened ? 216 : 72)
+            //            make.height.equalTo(height)
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
+            heightConstraint =  make.height.equalTo(height).constraint//(height)
         }
         
         imageViewFlag.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview().inset(12)
-//            make.top.leading.equalToSuperview().inset(12)
-//            make.bottom.equalToSuperview().inset(156)
+            //make.top.leading.bottom.equalToSuperview().inset(12)
+            make.top.leading.equalToSuperview().inset(12)
+            make.width.equalTo(82)//equalToSuperview().multipliedBy(CGFloat(82/343))
+            //            let bottomInset: CGFloat = (isOpened ? 156 : 12)
+            //            make.bottom.equalToSuperview().inset(bottomInset)
             let multyplier: CGFloat = 48/82
             make.height.equalTo(imageViewFlag.snp.width).multipliedBy(multyplier)
         }
@@ -239,15 +236,30 @@ class MainTableViewCell: UITableViewCell {
             make.height.equalTo(22)
         }
     }
-    
-    @objc func openCell() {
-        isOpened.toggle()
-        chevronButton.setImage(UIImage(systemName: isOpened ? "chevron.up" : "chevron.down"),
-                               for: .normal)
-//        if let completion = completion {
-//            completion()
-//        }
-        
+    override func updateConstraints() {
+        grayBackgroundView.snp.remakeConstraints { make in
+            
+            let height: CGFloat = (isOpened ? 216 : 72)
+            heightConstraint =  make.height.equalTo(height).constraint//(height)
+            //            make.height.equalTo(height)
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
+        }
+        super.updateConstraints()
     }
     
+    @objc func openCell()  {
+        isOpened.toggle()
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.chevronButton.setImage(UIImage(systemName: self.isOpened ? "chevron.up" : "chevron.down"),
+                                        for: .normal)
+            for outlet in self.hiddenOutlets {
+                outlet.isHidden = !self.isOpened
+            }
+            self.updateConstraints()
+            if let completion = self.completion {
+                completion()
+            }
+        }
+        
+    }
 }
