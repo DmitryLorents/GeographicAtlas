@@ -15,7 +15,8 @@ class MainTableViewCell: UITableViewCell {
     static let reuseID = "MainTableViewCell"
     private let textFormatter = TextFormatter()
     lazy var isOpened: Bool = false
-    var completion: (() -> Void)?
+    var completionOpenCell: (() -> Void)?
+    var completionShowCell: (() -> Void)?
     var heightConstraint: Constraint!
     
     var grayBackgroundView: UIView = {
@@ -153,6 +154,7 @@ class MainTableViewCell: UITableViewCell {
         let currencyString = textFormatter.currencies(currency)
         labelCurrenciesValue.text = currencyString
         chevronButton.addTarget(nil, action: #selector(openCell), for: .touchUpInside)
+        learnMoreButton.addTarget(nil, action: #selector(showCell), for: .touchUpInside)
     }
     
     private func setOutlets() {
@@ -232,16 +234,14 @@ class MainTableViewCell: UITableViewCell {
         }
         learnMoreButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(26)
+            make.top.equalTo(labelCurrencies.snp.bottom).inset(-26)
             make.height.equalTo(22)
         }
     }
     override func updateConstraints() {
         grayBackgroundView.snp.remakeConstraints { make in
-            
             let height: CGFloat = (isOpened ? 216 : 72)
             heightConstraint =  make.height.equalTo(height).constraint//(height)
-            //            make.height.equalTo(height)
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
         }
         super.updateConstraints()
@@ -249,17 +249,23 @@ class MainTableViewCell: UITableViewCell {
     
     @objc func openCell()  {
         isOpened.toggle()
-        UIView.animate(withDuration: 0.5, delay: 0) {
-            self.chevronButton.setImage(UIImage(systemName: self.isOpened ? "chevron.up" : "chevron.down"),
-                                        for: .normal)
-            for outlet in self.hiddenOutlets {
-                outlet.isHidden = !self.isOpened
-            }
-            self.updateConstraints()
-            if let completion = self.completion {
+        
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.chevronButton.setImage(UIImage(systemName: self.isOpened ? "chevron.up" : "chevron.down"),for: .normal)
+            if let completion = self.completionOpenCell {
                 completion()
             }
         }
         
+        for outlet in self.hiddenOutlets {
+            outlet.isHidden = !self.isOpened
+        }
     }
+    
+    @objc func showCell() {
+        if let compliton = completionShowCell {
+            compliton()
+        }
+     }
+    
 }

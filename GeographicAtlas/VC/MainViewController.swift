@@ -100,13 +100,13 @@ class MainViewController: UIViewController {
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let key = Region.key(for: indexPath.section)
-        guard let countryArray = countriesSorted?[key] else {
-            print("No countryArray")
-            return }
-        let country = countryArray[indexPath.row]
-        let detaoledVC = DetailedViewController(CCA2: country.cca2)
-        navigationController?.pushViewController(detaoledVC, animated: true)
+//        let key = Region.key(for: indexPath.section)
+//        guard let countryArray = countriesSorted?[key] else {
+//            print("No countryArray")
+//            return }
+//        let country = countryArray[indexPath.row]
+//        let detaoledVC = DetailedViewController(CCA2: country.cca2)
+//        navigationController?.pushViewController(detaoledVC, animated: true)
     }
 }
 
@@ -135,10 +135,19 @@ extension MainViewController: UITableViewDataSource {
         guard let countryArray = countriesSorted?[key] else {return UITableViewCell() }
         let country = countryArray[indexPath.row]
         cell.setup(with: country)
-        cell.completion = {
+        cell.completionOpenCell = {
             tableView.performBatchUpdates {
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-                //tableView.reloadData()
+                cell.updateConstraints()
+            }
+            cell.completionShowCell = { [weak self] in
+                guard let self = self else {return}
+                let key = Region.key(for: indexPath.section)
+                guard let countryArray = self.countriesSorted?[key] else {
+                    print("No countryArray")
+                    return }
+                let country = countryArray[indexPath.row]
+                let detailedVC = DetailedViewController(CCA2: country.cca2)
+                self.navigationController?.pushViewController(detailedVC, animated: true)
             }
         }
         return cell
