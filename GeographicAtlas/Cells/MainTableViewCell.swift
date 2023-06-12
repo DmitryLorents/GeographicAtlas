@@ -134,6 +134,12 @@ class MainTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.isOpened = false
+        updateConstraints()
+    }
+    
     //MARK: - Methods
     
     func setup(with country: Country?) {
@@ -174,10 +180,9 @@ class MainTableViewCell: UITableViewCell {
     
     private func setConstraints() {
         grayBackgroundView.snp.makeConstraints { make in
-            var height: CGFloat = (isOpened ? 216 : 72)
-            //            make.height.equalTo(height)
+            let height: CGFloat = (isOpened ? 216 : 72)
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
-            heightConstraint =  make.height.equalTo(height).constraint//(height)
+            heightConstraint =  make.height.equalTo(height).constraint
         }
         
         imageViewFlag.snp.makeConstraints { make in
@@ -244,6 +249,7 @@ class MainTableViewCell: UITableViewCell {
             heightConstraint =  make.height.equalTo(height).constraint//(height)
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
         }
+        self.chevronButton.setImage(UIImage(systemName: self.isOpened ? "chevron.up" : "chevron.down"),for: .normal)
         super.updateConstraints()
     }
     
@@ -251,7 +257,6 @@ class MainTableViewCell: UITableViewCell {
         isOpened.toggle()
         
         UIView.animate(withDuration: 0.3, delay: 0) {
-            self.chevronButton.setImage(UIImage(systemName: self.isOpened ? "chevron.up" : "chevron.down"),for: .normal)
             if let completion = self.completionOpenCell {
                 completion()
             }
