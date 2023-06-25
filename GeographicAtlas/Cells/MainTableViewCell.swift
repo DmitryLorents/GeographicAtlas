@@ -24,6 +24,7 @@ class MainTableViewCell: UITableViewCell {
         view.backgroundColor = .mainViewBackground
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
+        view.isSkeletonable = true
         return view
     }()
     var imageViewFlag: UIImageView = {
@@ -31,6 +32,7 @@ class MainTableViewCell: UITableViewCell {
         view.backgroundColor = .gray
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
+        view.isSkeletonable = true
         return view
     }()
     
@@ -40,6 +42,7 @@ class MainTableViewCell: UITableViewCell {
         button.setImage(image, for: .normal)
         button.tintColor = .black
         button.isUserInteractionEnabled = true
+        button.isSkeletonable = true
         return button
     }()
     
@@ -48,6 +51,7 @@ class MainTableViewCell: UITableViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .black
         label.text = "Country"
+        label.isSkeletonable = true
         return label
     }()
     
@@ -56,6 +60,7 @@ class MainTableViewCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .capitalLabel
         label.text = "Capital"
+        label.isSkeletonable = true
         return label
     }()
     
@@ -65,6 +70,7 @@ class MainTableViewCell: UITableViewCell {
         label.textColor = .capitalLabel
         label.text = "Population:"
         label.isHidden = true
+        label.isSkeletonable = true
         return label
     }()
     var labelPopulationValue: UILabel = {
@@ -73,6 +79,7 @@ class MainTableViewCell: UITableViewCell {
         label.textColor = .black
         label.text = "No data"
         label.isHidden = true
+        label.isSkeletonable = true
         return label
         
     }()
@@ -83,6 +90,7 @@ class MainTableViewCell: UITableViewCell {
         label.textColor = .capitalLabel
         label.text = "Area:"
         label.isHidden = true
+        label.isSkeletonable = true
         return label
     }()
     var labelAreaValue: UILabel = {
@@ -91,6 +99,7 @@ class MainTableViewCell: UITableViewCell {
         label.textColor = .black
         label.text = "No data"
         label.isHidden = true
+        label.isSkeletonable = true
         return label
     }()
     var labelCurrencies: UILabel = {
@@ -99,6 +108,7 @@ class MainTableViewCell: UITableViewCell {
         label.textColor = .capitalLabel
         label.text = "Currencies:"
         label.isHidden = true
+        label.isSkeletonable = true
         return label
     }()
     var labelCurrenciesValue: UILabel = {
@@ -107,6 +117,7 @@ class MainTableViewCell: UITableViewCell {
         label.textColor = .black
         label.text = "No data"
         label.isHidden = true
+        label.isSkeletonable = true
         return label
     }()
     
@@ -116,6 +127,7 @@ class MainTableViewCell: UITableViewCell {
         button.setTitle("Learn more", for: .normal)
         button.titleLabel?.font = UIFont(name: "SFProText-Semibold", size: 20)
         button.isHidden = true
+        button.isSkeletonable = true
         return button
     }()
     lazy var hiddenOutlets: [UIView] = {
@@ -126,6 +138,7 @@ class MainTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.isSkeletonable = true
         setOutlets()
         setConstraints()
     }
@@ -164,6 +177,7 @@ class MainTableViewCell: UITableViewCell {
     }
     
     private func setOutlets() {
+        contentView.isSkeletonable = true
         contentView.addSubview(grayBackgroundView)
         grayBackgroundView.addSubview(imageViewFlag)
         grayBackgroundView.addSubview(chevronButton)

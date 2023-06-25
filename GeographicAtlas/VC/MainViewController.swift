@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SkeletonView
 
 class MainViewController: UIViewController {
     
@@ -15,10 +16,11 @@ class MainViewController: UIViewController {
     var countriesSorted: [String: Countries]? {
         didSet {
             print("Countries downloaded")
-            activitiIndicator.stopAnimating()
-            UIView.animate(withDuration: 1, delay: 0) {
-                self.tableViewCountries.alpha = 1
-            }
+            tableViewCountries.hideSkeleton(transition: .crossDissolve(1))
+            //activitiIndicator.stopAnimating()
+//            UIView.animate(withDuration: 1, delay: 0) {
+//                self.tableViewCountries.alpha = 1
+//            }
             
             self.tableViewCountries.reloadData()
         }
@@ -30,6 +32,7 @@ class MainViewController: UIViewController {
     var tableViewCountries: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.isSkeletonable = true
         return table
     }()
     let smallCellHeight: CGFloat = 84
@@ -56,12 +59,10 @@ class MainViewController: UIViewController {
         tableViewCountries.rowHeight = UITableView.automaticDimension
         tableViewCountries.estimatedRowHeight = smallCellHeight
         view.addSubview(tableViewCountries)
-        //tableViewCountries.backgroundColor = .yellow
         tableViewCountries.separatorStyle = .none
         
         activitiIndicator.translatesAutoresizingMaskIntoConstraints = false
         activitiIndicator.hidesWhenStopped  = true
-        //activitiIndicator.color = .systemBlue
         view.addSubview(activitiIndicator)
     }
     
@@ -77,11 +78,11 @@ class MainViewController: UIViewController {
     }
     
     private func fetchCountries() {
-        
-        activitiIndicator.startAnimating()
-        UIView.animate(withDuration: 0.5, delay: 0) {
-            self.tableViewCountries.alpha = 0.3
-        }
+        tableViewCountries.showAnimatedGradientSkeleton()
+//        activitiIndicator.startAnimating()
+//        UIView.animate(withDuration: 0.5, delay: 0) {
+//            self.tableViewCountries.alpha = 0.3
+//        }
         networkManager.getCountriesInfo(CCA2: nil) { result in
             switch result {
             case.failure(let error): print(error.localizedDescription)
@@ -99,6 +100,15 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+}
+
+//MARK: -Skeleton Data Source
+
+extension MainViewController: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        MainTableViewCell.reuseID
         
     }
 }

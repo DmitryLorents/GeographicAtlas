@@ -19,6 +19,7 @@ class DetailedTableViewCell: UITableViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 80)
         label.text = "."
         label.textAlignment = .center
+        label.isSkeletonable = true
         return label
     }()
     
@@ -28,6 +29,7 @@ class DetailedTableViewCell: UITableViewCell {
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .capitalLabel
         label.text = "Text"
+        label.isSkeletonable = true
         return label
     }()
     
@@ -38,6 +40,7 @@ class DetailedTableViewCell: UITableViewCell {
         label.textColor = .black
         label.numberOfLines = 0
         label.text = "Text"
+        label.isSkeletonable = true
         return label
     }()
     
@@ -56,9 +59,11 @@ class DetailedTableViewCell: UITableViewCell {
     }
     
     private func setupOutlets() {
-        addSubview(labelPoint)
-        addSubview(labelTop)
-        addSubview(labelBottom)
+        self.isSkeletonable = true
+        contentView.isSkeletonable = true
+        contentView.addSubview(labelPoint)
+        contentView.addSubview(labelTop)
+        contentView.addSubview(labelBottom)
     }
     
     private func setConstraints() {
