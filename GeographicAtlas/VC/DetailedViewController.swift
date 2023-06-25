@@ -22,7 +22,7 @@ final class DetailedViewController: UIViewController {
             self.heightOfFifthRow = heightOfStandardRow + CGFloat(20 * ((self.country?.currencies?.dictionary.count ?? 1)-1))
             DispatchQueue.main.async {
                 
-                self.view.hideSkeleton()
+                self.view.hideSkeleton(transition: .crossDissolve(1))
                 self.tableViewDetailed.reloadData()
                 self.title = self.country?.name.common
                 //get image
@@ -90,15 +90,17 @@ final class DetailedViewController: UIViewController {
     }
     //MARK: - Functions
     private func setOutlets()  {
-        view.backgroundColor = .systemBackground
-        tableViewDetailed.register(UINib(nibName: "DetailedTableViewCell", bundle: nil), forCellReuseIdentifier: DetailedTableViewCell.reuseID)
-        
-        imageViewCountry.backgroundColor = .systemGray6
-        view.addSubview(imageViewCountry)
         view.isSkeletonable = true
+        view.backgroundColor = .systemBackground
+        
+        tableViewDetailed.register(UINib(nibName: "DetailedTableViewCell", bundle: nil), forCellReuseIdentifier: DetailedTableViewCell.reuseID)
+        tableViewDetailed.estimatedRowHeight = heightOfStandardRow
         tableViewDetailed.delegate = self
         tableViewDetailed.dataSource = self
         view.addSubview(tableViewDetailed)
+        
+        imageViewCountry.backgroundColor = .systemGray6
+        view.addSubview(imageViewCountry)
     }
     
     private func setConstraints() {

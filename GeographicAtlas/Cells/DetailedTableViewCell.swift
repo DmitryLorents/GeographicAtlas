@@ -20,6 +20,7 @@ class DetailedTableViewCell: UITableViewCell {
         label.text = "."
         label.textAlignment = .center
         label.isSkeletonable = true
+        label.isHiddenWhenSkeletonIsActive = true
         return label
     }()
     
@@ -77,11 +78,12 @@ class DetailedTableViewCell: UITableViewCell {
         labelTop.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
             make.leading.equalToSuperview().inset(32+16)
+            make.trailing.equalToSuperview().inset(16)
         }
         
         labelBottom.snp.makeConstraints { make in
             make.top.equalTo(labelTop.snp.bottom).inset(-4 )
-            make.leading.equalTo(labelTop)
+            make.leading.trailing.equalTo(labelTop)
         }
         
     }
