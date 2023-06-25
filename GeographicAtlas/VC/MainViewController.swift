@@ -100,13 +100,6 @@ class MainViewController: UIViewController {
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        let key = Region.key(for: indexPath.section)
-//        guard let countryArray = countriesSorted?[key] else {
-//            print("No countryArray")
-//            return }
-//        let country = countryArray[indexPath.row]
-//        let detaoledVC = DetailedViewController(CCA2: country.cca2)
-//        navigationController?.pushViewController(detaoledVC, animated: true)
     }
 }
 
