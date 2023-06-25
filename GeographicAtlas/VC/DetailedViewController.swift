@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 final class DetailedViewController: UIViewController {
     
@@ -16,10 +17,12 @@ final class DetailedViewController: UIViewController {
     
     var  country: Country? {
         didSet {
+            
             self.heightOfSixthRow = heightOfStandardRow + CGFloat(20 * ((self.country?.timezones.count ?? 1)-1))
             self.heightOfFifthRow = heightOfStandardRow + CGFloat(20 * ((self.country?.currencies?.dictionary.count ?? 1)-1))
             DispatchQueue.main.async {
                 
+                self.view.hideSkeleton()
                 self.tableViewDetailed.reloadData()
                 self.title = self.country?.name.common
                 //get image
@@ -38,11 +41,13 @@ final class DetailedViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius  = 8
+        imageView.isSkeletonable = true
         return imageView
     }()
     var tableViewDetailed: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.isSkeletonable = true
         return table
     }()
     
@@ -51,7 +56,7 @@ final class DetailedViewController: UIViewController {
     
     init(CCA2: String) {
         super.init(nibName: nil, bundle: nil)
-        
+        view.showAnimatedGradientSkeleton(transition: .crossDissolve(1))
         networkManager.getCountriesInfo(CCA2: CCA2) { result in
             switch result {
             case .failure(let error):
@@ -81,6 +86,7 @@ final class DetailedViewController: UIViewController {
         setConstraints()
         
         
+        
     }
     //MARK: - Functions
     private func setOutlets()  {
@@ -89,7 +95,7 @@ final class DetailedViewController: UIViewController {
         
         imageViewCountry.backgroundColor = .systemGray6
         view.addSubview(imageViewCountry)
-        
+        view.isSkeletonable = true
         tableViewDetailed.delegate = self
         tableViewDetailed.dataSource = self
         view.addSubview(tableViewDetailed)
@@ -164,6 +170,14 @@ extension DetailedViewController: UITableViewDelegate {
         }
     }
     
+}
+
+//MARK: - TableView skeleton data source
+
+extension DetailedViewController: SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        DetailedTableViewCell.reuseID
+    }
 }
 
 //MARK: - TableView datasource
