@@ -51,6 +51,7 @@
 		0A8FEF792A10FE1100A53B51 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		0A8FEF7B2A1BE0B500A53B51 /* Double + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double + Extension.swift"; sourceTree = "<group>"; };
 		0A8FEF7E2A1BE1BB00A53B51 /* TextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormatter.swift; sourceTree = "<group>"; };
+		0A9D43A82AD885940072700D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = GeographicAtlas/README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +71,7 @@
 		0A8454BB2A0D3925007E113E = {
 			isa = PBXGroup;
 			children = (
+				0A9D43A82AD885940072700D /* README.md */,
 				0A8454C62A0D3926007E113E /* GeographicAtlas */,
 				0A8454C52A0D3926007E113E /* Products */,
 			);
