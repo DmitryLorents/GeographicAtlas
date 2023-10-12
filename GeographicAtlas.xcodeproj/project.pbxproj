@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A0893C52A9A6DC200B0BA72 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0A0893C42A9A6DC200B0BA72 /* README.md */; };
 		0A8454C82A0D3926007E113E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8454C72A0D3926007E113E /* AppDelegate.swift */; };
 		0A8454CA2A0D3926007E113E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8454C92A0D3926007E113E /* SceneDelegate.swift */; };
 		0A8454CC2A0D3926007E113E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8454CB2A0D3926007E113E /* MainViewController.swift */; };
@@ -27,11 +26,11 @@
 		0A8FEF7A2A10FE1100A53B51 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8FEF792A10FE1100A53B51 /* UIColor + Extension.swift */; };
 		0A8FEF7C2A1BE0B500A53B51 /* Double + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8FEF7B2A1BE0B500A53B51 /* Double + Extension.swift */; };
 		0A8FEF7F2A1BE1BB00A53B51 /* TextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8FEF7E2A1BE1BB00A53B51 /* TextFormatter.swift */; };
+		0A9D43AA2AD889A00072700D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0A9D43A92AD889A00072700D /* README.md */; };
 		0AF8548A2A48237200878A09 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF854892A48237200878A09 /* SkeletonView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A0893C42A9A6DC200B0BA72 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0A8454C42A0D3926007E113E /* GeographicAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeographicAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A8454C72A0D3926007E113E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A8454C92A0D3926007E113E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,7 +50,7 @@
 		0A8FEF792A10FE1100A53B51 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		0A8FEF7B2A1BE0B500A53B51 /* Double + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double + Extension.swift"; sourceTree = "<group>"; };
 		0A8FEF7E2A1BE1BB00A53B51 /* TextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormatter.swift; sourceTree = "<group>"; };
-		0A9D43A82AD885940072700D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = GeographicAtlas/README.md; sourceTree = "<group>"; };
+		0A9D43A92AD889A00072700D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +70,7 @@
 		0A8454BB2A0D3925007E113E = {
 			isa = PBXGroup;
 			children = (
-				0A9D43A82AD885940072700D /* README.md */,
+				0A9D43A92AD889A00072700D /* README.md */,
 				0A8454C62A0D3926007E113E /* GeographicAtlas */,
 				0A8454C52A0D3926007E113E /* Products */,
 			);
@@ -88,7 +87,6 @@
 		0A8454C62A0D3926007E113E /* GeographicAtlas */ = {
 			isa = PBXGroup;
 			children = (
-				0A0893C42A9A6DC200B0BA72 /* README.md */,
 				0A8FEF7D2A1BE19E00A53B51 /* Utilities */,
 				0A8FEF782A10FDEF00A53B51 /* Extensions */,
 				0A8454E12A0D3A8B007E113E /* App */,
@@ -246,7 +244,7 @@
 				0A8454D42A0D3929007E113E /* LaunchScreen.storyboard in Resources */,
 				0A8454D12A0D3929007E113E /* Assets.xcassets in Resources */,
 				0A8454DE2A0D3A5A007E113E /* MainTableViewCell.xib in Resources */,
-				0A0893C52A9A6DC200B0BA72 /* README.md in Resources */,
+				0A9D43AA2AD889A00072700D /* README.md in Resources */,
 				0A85D23A2A0E9647003C9D65 /* JsonShort.json in Resources */,
 				0A8454E72A0D3B36007E113E /* DetailedTableViewCell.xib in Resources */,
 				0A85D2382A0E941B003C9D65 /* JSON.json in Resources */,
