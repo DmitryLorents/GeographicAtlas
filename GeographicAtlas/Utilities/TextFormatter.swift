@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TextFormatter {
+final class TextFormatter {
     
     //convert square kilometers from Double to String
     func area(_ quantity: Double?) -> String {

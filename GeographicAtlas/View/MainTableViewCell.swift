@@ -9,17 +9,17 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class MainTableViewCell: UITableViewCell {
-    //MARK: - Constants and variables
+final class MainTableViewCell: UITableViewCell {
     
-    static let reuseID = "MainTableViewCell"
+    //MARK: - Constants and variables
+    static let reuseID = String(describing: MainTableViewCell.self)
     private let textFormatter = TextFormatter()
-    lazy var isOpened: Bool = false
+    private var isOpened: Bool = false
     var completionOpenCell: (() -> Void)?
     var completionShowCell: (() -> Void)?
-    var heightConstraint: Constraint!
+    private var heightConstraint: Constraint!
     
-    var grayBackgroundView: UIView = {
+    private var grayBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .mainViewBackground
         view.layer.cornerRadius = 12
@@ -27,7 +27,8 @@ class MainTableViewCell: UITableViewCell {
         view.isSkeletonable = true
         return view
     }()
-    var imageViewFlag: UIImageView = {
+    
+    private var imageViewFlag: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .gray
         view.layer.cornerRadius = 12
@@ -36,7 +37,7 @@ class MainTableViewCell: UITableViewCell {
         return view
     }()
     
-    var chevronButton: UIButton = {
+    private var chevronButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(systemName: "chevron.down")
         button.setImage(image, for: .normal)
@@ -46,7 +47,7 @@ class MainTableViewCell: UITableViewCell {
         return button
     }()
     
-    var labelCountry: UILabel = {
+    private var labelCountry: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .black
@@ -55,7 +56,7 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
-    var labelCapital: UILabel = {
+    private var labelCapital: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .capitalLabel
@@ -64,7 +65,7 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
-    var labelPopulation: UILabel = {
+    private var labelPopulation: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .capitalLabel
@@ -73,7 +74,7 @@ class MainTableViewCell: UITableViewCell {
         label.isSkeletonable = true
         return label
     }()
-    var labelPopulationValue: UILabel = {
+    private var labelPopulationValue: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .black
@@ -84,7 +85,7 @@ class MainTableViewCell: UITableViewCell {
         
     }()
     
-    var labelArea: UILabel = {
+    private var labelArea: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .capitalLabel
@@ -93,7 +94,7 @@ class MainTableViewCell: UITableViewCell {
         label.isSkeletonable = true
         return label
     }()
-    var labelAreaValue: UILabel = {
+    private var labelAreaValue: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .black
@@ -102,7 +103,7 @@ class MainTableViewCell: UITableViewCell {
         label.isSkeletonable = true
         return label
     }()
-    var labelCurrencies: UILabel = {
+    private var labelCurrencies: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .capitalLabel
@@ -111,7 +112,7 @@ class MainTableViewCell: UITableViewCell {
         label.isSkeletonable = true
         return label
     }()
-    var labelCurrenciesValue: UILabel = {
+    private var labelCurrenciesValue: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .black
@@ -121,7 +122,7 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
-    var learnMoreButton: UIButton = {
+    private var learnMoreButton: UIButton = {
         let button = UIButton(type: .system)
         button.isUserInteractionEnabled = true
         button.setTitle("Learn more", for: .normal)
@@ -130,21 +131,25 @@ class MainTableViewCell: UITableViewCell {
         button.isSkeletonable = true
         return button
     }()
-    lazy var hiddenOutlets: [UIView] = {
+    //use to hide views
+    private lazy var hiddenOutlets: [UIView] = {
         [labelPopulation, labelPopulationValue, labelArea, labelAreaValue, labelCurrencies, labelCurrenciesValue, learnMoreButton]
     }()
     
     //MARK: - Load view
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.isSkeletonable = true
-        setOutlets()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setViews()
         setConstraints()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        super.setSelected(false, animated: animated)
     }
     
     override func prepareForReuse() {
@@ -155,6 +160,7 @@ class MainTableViewCell: UITableViewCell {
     
     //MARK: - Methods
     
+    //set cell data
     func setup(with country: Country?) {
         labelCountry.text = country?.name.common
         labelCapital.text = country?.capital?.first
@@ -172,11 +178,14 @@ class MainTableViewCell: UITableViewCell {
         let currency = country?.currencies
         let currencyString = textFormatter.currencies(currency)
         labelCurrenciesValue.text = currencyString
-        chevronButton.addTarget(nil, action: #selector(openCell), for: .touchUpInside)
-        learnMoreButton.addTarget(nil, action: #selector(showCell), for: .touchUpInside)
+        setChevronButtonImage()
+        
     }
     
-    private func setOutlets() {
+    private func setViews() {
+        self.isSkeletonable = true
+        chevronButton.addTarget(nil, action: #selector(openCell), for: .touchUpInside)
+        learnMoreButton.addTarget(nil, action: #selector(showCell), for: .touchUpInside)
         contentView.isSkeletonable = true
         contentView.addSubview(grayBackgroundView)
         grayBackgroundView.addSubview(imageViewFlag)
@@ -193,6 +202,7 @@ class MainTableViewCell: UITableViewCell {
     }
     
     private func setConstraints() {
+        
         grayBackgroundView.snp.makeConstraints { make in
             let height: CGFloat = (isOpened ? 216 : 72)
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
@@ -200,13 +210,9 @@ class MainTableViewCell: UITableViewCell {
         }
         
         imageViewFlag.snp.makeConstraints { make in
-            //make.top.leading.bottom.equalToSuperview().inset(12)
             make.top.leading.equalToSuperview().inset(12)
-            make.width.equalTo(82)//equalToSuperview().multipliedBy(CGFloat(82/343))
-            //            let bottomInset: CGFloat = (isOpened ? 156 : 12)
-            //            make.bottom.equalToSuperview().inset(bottomInset)
-            let multyplier: CGFloat = 48/82
-            make.height.equalTo(imageViewFlag.snp.width).multipliedBy(multyplier)
+            make.width.equalTo(82)
+            make.height.equalTo(imageViewFlag.snp.width).multipliedBy(48.0/82.0)
         }
         
         chevronButton.snp.makeConstraints { make in
@@ -231,45 +237,57 @@ class MainTableViewCell: UITableViewCell {
             make.bottom.equalTo(imageViewFlag).inset(-30)
             make.leading.equalTo(imageViewFlag)
         }
+        
         labelPopulationValue.snp.makeConstraints { make in
             make.bottom.equalTo(labelPopulation)
             make.leading.equalTo(labelPopulation.snp.trailing).inset(-4)
         }
+        
         labelArea.snp.makeConstraints { make in
             make.bottom.equalTo(labelPopulation).inset(-26)
             make.leading.equalTo(imageViewFlag)
         }
+        
         labelAreaValue.snp.makeConstraints { make in
             make.bottom.equalTo(labelArea)
             make.leading.equalTo(labelArea.snp.trailing).inset(-4)
         }
+        
         labelCurrencies.snp.makeConstraints { make in
             make.bottom.equalTo(labelArea).inset(-26)
             make.leading.equalTo(imageViewFlag)
         }
+        
         labelCurrenciesValue.snp.makeConstraints { make in
             make.bottom.equalTo(labelCurrencies)
             make.leading.equalTo(labelCurrencies.snp.trailing).inset(-4)
         }
+        
         learnMoreButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(labelCurrencies.snp.bottom).inset(-26)
             make.height.equalTo(22)
         }
     }
+    
     override func updateConstraints() {
+        
+        //resize cell when open button tapped
         grayBackgroundView.snp.remakeConstraints { make in
             let height: CGFloat = (isOpened ? 216 : 72)
-            heightConstraint =  make.height.equalTo(height).constraint//(height)
+            heightConstraint =  make.height.equalTo(height).constraint
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
         }
-        self.chevronButton.setImage(UIImage(systemName: self.isOpened ? "chevron.up" : "chevron.down"),for: .normal)
         super.updateConstraints()
     }
     
-    @objc func openCell()  {
+    private func setChevronButtonImage() {
+        self.chevronButton.setImage(UIImage(systemName: self.isOpened ? "chevron.up" : "chevron.down"),for: .normal)
+    }
+    
+    @objc private func openCell()  {
         isOpened.toggle()
-        
+        setChevronButtonImage()
         UIView.animate(withDuration: 0.3, delay: 0) {
             if let completion = self.completionOpenCell {
                 completion()
@@ -281,10 +299,10 @@ class MainTableViewCell: UITableViewCell {
         }
     }
     
-    @objc func showCell() {
+    @objc private func showCell() {
         if let compliton = completionShowCell {
             compliton()
         }
-     }
+    }
     
 }

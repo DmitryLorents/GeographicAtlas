@@ -9,61 +9,46 @@ import UIKit
 import SnapKit
 import SkeletonView
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
     //MARK:  - Constants, variables & outlets
     
-    var countriesSorted: [String: Countries]? {
+    private var countriesSorted: [String: Countries]? {
         didSet {
             print("Countries downloaded")
             tableViewCountries.hideSkeleton(transition: .crossDissolve(1))
-            //activitiIndicator.stopAnimating()
-//            UIView.animate(withDuration: 1, delay: 0) {
-//                self.tableViewCountries.alpha = 1
-//            }
             
             self.tableViewCountries.reloadData()
         }
     }
     
-    let networkManager = DownloadManager()
-    
-    let activitiIndicator =  UIActivityIndicatorView(style: .large)
-    var tableViewCountries: UITableView = {
+    private let networkManager = DownloadManager()
+    private lazy var tableViewCountries: UITableView = {
         let table = UITableView()
-        table.translatesAutoresizingMaskIntoConstraints = false
         table.isSkeletonable = true
+        table.dataSource = self
+        table.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.reuseID)
+        table.rowHeight = UITableView.automaticDimension
+        table.estimatedRowHeight = 84
+        table.separatorStyle = .none
         return table
     }()
-    let smallCellHeight: CGFloat = 84
-    let bigCellHeight: CGFloat = 228
     
     //MARK: - Load view
     override func viewDidLoad() {
         super.viewDidLoad()
-        setOutlets()
+        setViews()
         setConstraints()
         fetchCountries()
         
         
     }
     //MARK: - Functions
-    private func setOutlets()  {
+    private func setViews()  {
         
         view.backgroundColor = .systemBackground
         title = "World countries"
-        
-        tableViewCountries.delegate = self
-        tableViewCountries.dataSource = self
-        tableViewCountries.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: MainTableViewCell.reuseID)
-        tableViewCountries.rowHeight = UITableView.automaticDimension
-        tableViewCountries.estimatedRowHeight = smallCellHeight
         view.addSubview(tableViewCountries)
-        tableViewCountries.separatorStyle = .none
-        
-        activitiIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activitiIndicator.hidesWhenStopped  = true
-        view.addSubview(activitiIndicator)
     }
     
     private func setConstraints() {
@@ -71,18 +56,10 @@ class MainViewController: UIViewController {
         tableViewCountries.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        
-        activitiIndicator.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
     }
     
     private func fetchCountries() {
         tableViewCountries.showAnimatedGradientSkeleton()
-//        activitiIndicator.startAnimating()
-//        UIView.animate(withDuration: 0.5, delay: 0) {
-//            self.tableViewCountries.alpha = 0.3
-//        }
         networkManager.getCountriesInfo(CCA2: nil) { result in
             switch result {
             case.failure(let error): print(error.localizedDescription)
@@ -94,14 +71,6 @@ class MainViewController: UIViewController {
         }
     }
     
-}
-
-//MARK: - TableView delegate
-
-extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
 }
 
 //MARK: -Skeleton Data Source
@@ -124,18 +93,20 @@ extension MainViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         countriesSorted?.count ?? 0
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = Region.key(for: section)
-        guard let countriesSorted = countriesSorted else {return 0}
+        guard let countriesSorted else {return 0}
         let countriesArray = countriesSorted[key]
         return countriesArray?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseID) as? MainTableViewCell else {return UITableViewCell()}
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseID) as? MainTableViewCell else {return .init()}
         let key = Region.key(for: indexPath.section)
         
-        guard let countryArray = countriesSorted?[key] else {return UITableViewCell() }
+        guard let countryArray = countriesSorted?[key] else {return .init() }
         let country = countryArray[indexPath.row]
         cell.setup(with: country)
         cell.completionOpenCell = {
@@ -143,7 +114,7 @@ extension MainViewController: UITableViewDataSource {
                 cell.updateConstraints()
             }
             cell.completionShowCell = { [weak self] in
-                guard let self = self else {return}
+                guard let self else {return}
                 let key = Region.key(for: indexPath.section)
                 guard let countryArray = self.countriesSorted?[key] else {
                     print("No countryArray")

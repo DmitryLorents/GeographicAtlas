@@ -8,6 +8,7 @@
 import Foundation
 
 extension Double {
+    //computed propperty to format Double -> 1K or 1M
     var kmFormatted: String {
            switch self {
            case ..<1_000:
