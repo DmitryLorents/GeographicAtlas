@@ -37,18 +37,21 @@ struct CurrencyContainer: Codable {
     var dictionary: [String: Currency]
     
     private struct DynamicCodingKeys: CodingKey, Hashable {
+        //case key is Int
         var intValue: Int? {return nil}
         
         init?(intValue: Int) {
             return nil
         }
         
+        //case key is String
         var stringValue: String
+        
         init?(stringValue: String) {
             self.stringValue = stringValue
         }
     }
-    
+    //parse currency with dynamic key
     init(from decoder: Decoder) throws {
         var outputDictionary = [String: Currency]()
         let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
@@ -76,6 +79,8 @@ struct Name: Codable {
 }
 
 enum Region: String, Codable, CaseIterable, Comparable {
+    
+    //Comparable implementation
     static func < (lhs: Region, rhs: Region) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
@@ -87,6 +92,7 @@ enum Region: String, Codable, CaseIterable, Comparable {
     case europe = "Europe"
     case oceania = "Oceania"
     
+    //convert section index to section name
     static func key(for index: Int) -> String {
         switch index {
         case 0: return self.africa.rawValue

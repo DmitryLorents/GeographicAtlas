@@ -7,27 +7,31 @@
 
 import Foundation
 
-class TextFormatter {
+final class TextFormatter {
+    
+    //convert square kilometers from Double to String
     func area(_ quantity: Double?) -> String {
-        guard let quantity = quantity else {return "No data"}
+        guard let quantity else {return "No data"}
         let areaMeasurement = Measurement(value: quantity, unit: UnitArea.squareKilometers)
         let formatter = MeasurementFormatter()
         return formatter.string(from: areaMeasurement)
     }
     
+    //format population quantity to 1K & 1m
     func population(_ quantity: Int) -> String {
         return Double(quantity).kmFormatted
     }
-    
+
+    //format [String] -> multy line String
     func timeZones(_ zones: [String]?) -> String {
-        guard let zones = zones  else { return  "No data" }
+        guard let zones  else { return  "No data" }
         var timeZoneString = ""
         for zone in zones {
             timeZoneString.append( (timeZoneString.isEmpty ? zone : "\n\(zone)") )
         }
         return timeZoneString.isEmpty ? "No data" : timeZoneString
     }
-    
+    //format degrees (Double) -> String
     func coordinates(_ coordinates: [Double]?) -> String {
         guard let coordinates = coordinates else {return "No data"}
         guard coordinates.count > 1 else {return "No data"}
@@ -43,9 +47,9 @@ class TextFormatter {
         let lonSecString = formatter.string(from: lonSec)
         return "\(latDegString)\(latSecString), \(lonDegString)\(lonSecString)"
     }
-    
+    //format currencies data -> multy line String
     func currencies(_ container: CurrencyContainer?) -> String {
-        guard let container = container else {return "No data"}
+        guard let container else {return "No data"}
         var outputString = ""
         for (key, value) in container.dictionary {
             let currencyAbreviature = key

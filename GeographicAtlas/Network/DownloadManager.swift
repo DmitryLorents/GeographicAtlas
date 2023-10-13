@@ -12,12 +12,13 @@ enum ParsingErrors: Error {
     
 }
 
-class  DownloadManager {
-    var urlString: String! //= "https://restcountries.com/v3.1/all"
+final class  DownloadManager {
+    var urlString: String!
     let decoder = JSONDecoder()
 
     
     func getCountriesInfo(CCA2: String?, completion: @escaping (Result<Countries, Error>) -> () ) {
+        //set urlString depending on CCA2
         switch CCA2 {
         case.none:
             urlString =  "https://restcountries.com/v3.1/all"
@@ -31,7 +32,7 @@ class  DownloadManager {
         
         URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
             
-            guard let self = self else {
+            guard let self else {
                 print("No self")
                 return }
             guard let downloadedData = data, error == nil else {

@@ -11,17 +11,17 @@ import SkeletonView
 final class DetailedViewController: UIViewController {
     
     //MARK:  - Constants, variables & outlets
-    let heightOfStandardRow: CGFloat = 70
-    var heightOfSixthRow: CGFloat  = 70
-    var heightOfFifthRow: CGFloat  = 70
+    private let heightOfStandardRow: CGFloat = 70
+    private var heightOfSixthRow: CGFloat  = 70
+    private var heightOfFifthRow: CGFloat  = 70
     
-    var  country: Country? {
+    private var  country: Country? {
         didSet {
-            
+            //increase cell height in case of multy line string
             self.heightOfSixthRow = heightOfStandardRow + CGFloat(20 * ((self.country?.timezones.count ?? 1)-1))
             self.heightOfFifthRow = heightOfStandardRow + CGFloat(20 * ((self.country?.currencies?.dictionary.count ?? 1)-1))
             DispatchQueue.main.async {
-                
+                //set view appearance
                 self.view.hideSkeleton(transition: .crossDissolve(1))
                 self.tableViewDetailed.reloadData()
                 self.title = self.country?.name.common
@@ -33,21 +33,24 @@ final class DetailedViewController: UIViewController {
             }
         }
     }
-    var tableData: [(name: String, value: String)]? = nil
-    let networkManager = DownloadManager()
-    let textFormatter = TextFormatter()
-    var imageViewCountry: UIImageView = {
+    private var tableData: [(name: String, value: String)]? = nil
+    private let networkManager = DownloadManager()
+    private let textFormatter = TextFormatter()
+    private var imageViewCountry: UIImageView = {
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius  = 8
         imageView.isSkeletonable = true
+        imageView.backgroundColor = .systemGray6
         return imageView
     }()
-    var tableViewDetailed: UITableView = {
+    private lazy var tableViewDetailed: UITableView = {
         let table = UITableView()
-        table.translatesAutoresizingMaskIntoConstraints = false
         table.isSkeletonable = true
+        table.register(DetailedTableViewCell.self, forCellReuseIdentifier: DetailedTableViewCell.reuseID)
+        table.estimatedRowHeight = heightOfStandardRow
+        table.delegate = self
+        table.dataSource = self
         return table
     }()
     
@@ -71,7 +74,6 @@ final class DetailedViewController: UIViewController {
     init(country: Country?) {
         super.init(nibName: nil, bundle: nil)
         self.country = country
-        self.title = country?.name.common
     }
     
     required init?(coder: NSCoder) {
@@ -81,25 +83,17 @@ final class DetailedViewController: UIViewController {
     //MARK: - Load view
     override func viewDidLoad() {
         super.viewDidLoad()
-        setOutlets()
+        setViews()
         setupBackButton()
         setConstraints()
-        
-        
-        
     }
+    
     //MARK: - Functions
-    private func setOutlets()  {
+    
+    private func setViews()  {
         view.isSkeletonable = true
         view.backgroundColor = .systemBackground
-        
-        tableViewDetailed.register(UINib(nibName: "DetailedTableViewCell", bundle: nil), forCellReuseIdentifier: DetailedTableViewCell.reuseID)
-        tableViewDetailed.estimatedRowHeight = heightOfStandardRow
-        tableViewDetailed.delegate = self
-        tableViewDetailed.dataSource = self
         view.addSubview(tableViewDetailed)
-        
-        imageViewCountry.backgroundColor = .systemGray6
         view.addSubview(imageViewCountry)
     }
     
@@ -116,7 +110,7 @@ final class DetailedViewController: UIViewController {
             make.top.equalTo(imageViewCountry.snp.bottom).inset(-22)
         }
     }
-    
+    //create String data for cell's labels
     private func setDataForCell(index: IndexPath) -> (topText: String, bottomText: String?) {
         switch index.row {
         case 0: return ("Region", country?.region.rawValue )
@@ -154,7 +148,7 @@ final class DetailedViewController: UIViewController {
             action: #selector(backButtonAction))
     }
     
-    @objc func backButtonAction()  {
+    @objc private func backButtonAction()  {
         navigationController?.popViewController(animated: true)
     }
     
@@ -192,7 +186,7 @@ extension DetailedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailedTableViewCell.reuseID, for: indexPath) as? DetailedTableViewCell else {return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailedTableViewCell.reuseID, for: indexPath) as? DetailedTableViewCell else {return .init() }
         let dataForCell = setDataForCell(index: indexPath)
         cell.setup(dataForCell)
         return cell

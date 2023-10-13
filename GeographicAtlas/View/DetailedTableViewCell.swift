@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-class DetailedTableViewCell: UITableViewCell {
+final class DetailedTableViewCell: UITableViewCell {
     
-    static let reuseID = "DetailedTableViewCell"
+    static let reuseID = String(describing: DetailedTableViewCell.self)
     
-    var labelPoint: UILabel = {
+    private var labelPoint: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -24,7 +24,7 @@ class DetailedTableViewCell: UITableViewCell {
         return label
     }()
     
-    var labelTop: UILabel = {
+    private var labelTop: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 15)
@@ -34,7 +34,7 @@ class DetailedTableViewCell: UITableViewCell {
         return label
     }()
     
-    var labelBottom: UILabel = {
+    private var labelBottom: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SFProText-Regular", size: 20)
@@ -45,21 +45,24 @@ class DetailedTableViewCell: UITableViewCell {
         return label
     }()
     
+    // Init
     
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setupOutlets()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
         setConstraints()
-        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        super.setSelected(false, animated: animated)
 
     }
     
-    private func setupOutlets() {
+    private func setupViews() {
         self.isSkeletonable = true
         contentView.isSkeletonable = true
         contentView.addSubview(labelPoint)
@@ -68,11 +71,10 @@ class DetailedTableViewCell: UITableViewCell {
     }
     
     private func setConstraints() {
+        
         labelPoint.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(-45)
             make.leading.equalToSuperview().inset(16)
-//            make.width.equalTo(24)
-//            make.height.equalTo(24)
         }
         
         labelTop.snp.makeConstraints { make in
@@ -87,7 +89,7 @@ class DetailedTableViewCell: UITableViewCell {
         }
         
     }
-    
+    //set cell data
     func setup(_ tupleData: (topText: String, bottomText: String?)) {
         labelTop.text = tupleData.topText
         labelBottom.text = tupleData.bottomText ?? "No data"
